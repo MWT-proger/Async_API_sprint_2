@@ -5,6 +5,5 @@ from new_base_model import NewBaseModel as BaseModel
 
 
 class Genre(BaseModel):
-    id: Union[str, UUID]
     name: str
     description: Optional[str] = None

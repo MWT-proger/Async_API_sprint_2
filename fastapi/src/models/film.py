@@ -8,7 +8,6 @@ OBJ_NAME = Union[str, str, UUID]
 
 
 class Film(BaseModel):
-    id: Union[str, UUID]
     imdb_rating: Optional[float] = None
     genre: Optional[List[str]] = None
     title: str

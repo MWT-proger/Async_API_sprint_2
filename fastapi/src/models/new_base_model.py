@@ -8,9 +8,7 @@ def orjson_dumps(v, *, default):
 
 
 class NewBaseModel(BaseModel):
-    id: str
-    title: str
-    description: str
+    id: Union[str, UUID]
 
     class Config:
         json_loads = orjson.loads
