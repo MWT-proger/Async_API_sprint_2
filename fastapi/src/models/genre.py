@@ -1,7 +1,6 @@
-from uuid import UUID
-from typing import Union, Optional, List, Dict
+from typing import Optional
 
-from new_base_model import NewBaseModel as BaseModel
+from models.new_base_model import NewBaseModel as BaseModel
 
 
 class Genre(BaseModel):

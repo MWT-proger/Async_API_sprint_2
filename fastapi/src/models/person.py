@@ -1,5 +1,5 @@
+from typing import Dict, List, Optional, Union
 from uuid import UUID
-from typing import Union, Optional, List, Dict
 
 from new_base_model import NewBaseModel as BaseModel
 
