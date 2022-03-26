@@ -2,14 +2,14 @@ import logging
 
 import aioredis
 import uvicorn
-from elasticsearch import AsyncElasticsearch
-from fastapi import FastAPI
-from fastapi.responses import ORJSONResponse
-
+from api.v1 import genres
 from core import config
 from core.logger import LOGGING
-from db import elastic
-from db import redis
+from db import elastic, redis
+from elasticsearch import AsyncElasticsearch
+from fastapi.responses import ORJSONResponse
+
+from fastapi import FastAPI
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -29,6 +29,8 @@ async def startup():
 async def shutdown():
     await redis.redis.close()
     await elastic.es.close()
+
+app.include_router(genres.router, prefix='/api/v1/genres', tags=['genre'])
 
 
 if __name__ == '__main__':
