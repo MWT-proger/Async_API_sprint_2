@@ -1,7 +1,8 @@
+from typing import Union
+from uuid import UUID
+
 import orjson
 from pydantic import BaseModel
-from uuid import UUID
-from typing import Union
 
 
 def orjson_dumps(v, *, default):
