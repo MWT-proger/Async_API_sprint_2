@@ -12,10 +12,12 @@ services:
       - "5432:5432"
   movies:
     image: mwtechdocker2/admin_panel:v1
+    # TODO Временно добавил команду
+    command: python manage.py runserver 0.0.0.0:7000
     volumes:
       - static_volume:/usr/src/app/static
     ports:
-      - "8000:8000"
+      - "8000:7000"
     env_file:
       - .env
     depends_on:
