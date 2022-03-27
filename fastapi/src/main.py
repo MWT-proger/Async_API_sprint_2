@@ -4,7 +4,7 @@ import aioredis
 import uvicorn
 
 from api.v1 import genres
-from api.v1 import films
+from api.v1 import persons, films
 from core import config
 from core.logger import LOGGING
 from db import elastic, redis
@@ -32,9 +32,9 @@ async def shutdown():
     await redis.redis.close()
     await elastic.es.close()
 
-app.include_router(genres.router, prefix='/api/v1/genres', tags=['genre'])
 app.include_router(films.router, prefix='/api/v1/films', tags=['film'])
-
+app.include_router(genres.router, prefix='/api/v1/genres', tags=['genre'])
+app.include_router(persons.router, prefix='/api/v1/persons', tags=['person'])
 
 if __name__ == '__main__':
     uvicorn.run(
