@@ -29,3 +29,8 @@ class FilmDetail(BaseModel):
     actors: Optional[List[Dict[OBJ_ID, OBJ_NAME]]] = None
     writers: Optional[List[Dict[OBJ_ID, OBJ_NAME]]] = None
     directors: Optional[List[Dict[OBJ_ID, OBJ_NAME]]] = None
+
+
+class FilmList(BaseModel):
+    title: str
+    imdb_rating: Optional[float] = None
