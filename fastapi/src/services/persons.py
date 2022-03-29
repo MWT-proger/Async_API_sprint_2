@@ -28,7 +28,6 @@ class PersonService:
         return person
 
     async def _get_person_from_elastic(self, person_id: str) -> Optional[Person]:
-        """Получает данные о персоне из Elastic"""
         try:
             doc = await self.elastic.get(PERSON_INDEX_ELASTIC, person_id)
         except NotFoundError:
@@ -41,7 +40,7 @@ class PersonService:
 
     async def _get_person_from_cache(self, person_id):
         """Получает данные о персоне из кэша"""
-        data = await self.redis.get(person_id)
+        data = await self.redis.get('person:{id}'.format(id=person_id))
         if not data:
             return None
         return Person.parse_raw(data)
@@ -54,7 +53,6 @@ class PersonService:
         return persons
 
     async def _get_persons_from_elastic(self, body, page_size, page_number) -> List[Person]:
-        """Получает данные о персонах из Elastic по параметрам"""
         persons = await self.elastic.search(
             index='persons',
             body=body,

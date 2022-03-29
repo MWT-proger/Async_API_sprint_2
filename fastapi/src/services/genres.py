@@ -39,7 +39,6 @@ class GenreService:
         return genres
 
     async def _get_genres_from_elastic(self) -> List[Genre]:
-        """Получает данные о жанрах из elasticsearch"""
         genres = await self.elasticsearch.search(
             body={"query": {"match_all": {}}},
             index='genres',
@@ -47,7 +46,6 @@ class GenreService:
         return [Genre(**genre['_source']) for genre in genres['hits']['hits']]
 
     async def _put_genres_to_cache(self, genres: List[Genre]) -> None:
-        """Добавляет данные о жанрах в кэш"""
         await self.redis.set(
             'genres',
             json.dumps([genre.json() for genre in genres]),
@@ -55,7 +53,6 @@ class GenreService:
         )
 
     async def _get_all_genres_from_cache(self) -> Optional[List[Genre]]:
-        """Добавляет данные о всех жанрах а кэш"""
         data = await self.redis.get('genres')
         if not data:
             return None
@@ -63,7 +60,6 @@ class GenreService:
         return genres
 
     async def _get_genre_from_elastic(self, genre_id: str) -> Optional[Genre]:
-        """Получает данные о жанре из elasticsearch"""
         try:
             doc = await self.elasticsearch.get(GENRES_INDEX_ELASTIC, genre_id)
         except NotFoundError:
@@ -72,7 +68,7 @@ class GenreService:
 
     async def _genre_from_cache(self, genre_id: str):
         """Получает данные о жанре из кэша"""
-        data = await self.redis.get(genre_id)
+        data = await self.redis.get("%s:" % GENRES_INDEX_ELASTIC + genre_id)
         if not data:
             return None
 
@@ -81,7 +77,7 @@ class GenreService:
 
     async def _put_genre_to_cache(self, genre: Genre):
         """Складывает данные о жанре в кэш"""
-        await self.redis.set(genre.id, genre.json(), expire=GENRE_CACHE_EXPIRE_IN_SECONDS)
+        await self.redis.set("%s:" % GENRES_INDEX_ELASTIC + genre.id, genre.json(), expire=GENRE_CACHE_EXPIRE_IN_SECONDS)
 
 
 @lru_cache()

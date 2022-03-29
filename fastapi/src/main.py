@@ -35,12 +35,3 @@ async def shutdown():
 app.include_router(films.router, prefix='/api/v1/films', tags=['film'])
 app.include_router(genres.router, prefix='/api/v1/genres', tags=['genre'])
 app.include_router(persons.router, prefix='/api/v1/persons', tags=['person'])
-
-if __name__ == '__main__':
-    uvicorn.run(
-        'main:app',
-        host='0.0.0.0',
-        port=9000,
-        log_config=LOGGING,
-        log_level=logging.DEBUG
-    )

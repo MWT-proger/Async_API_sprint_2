@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from fastapi import APIRouter, Query, Depends, HTTPException
 from services.persons import PersonService, get_person_service
+from api import constant
 
 router = APIRouter()
 
@@ -21,8 +22,8 @@ class Person(BaseModel):
 @router.get('/search', response_model=List[Person])
 async def persons_search(
         query: Optional[str] = Query(None),
-        page_number: int = Query(1, alias='page[number]', title='Номер страницы'),
-        page_size: int = Query(20, alias='page[size]', title='Размер страницы'),
+        page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
+        page_size: int = Query(20, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
         person_service: PersonService = Depends(get_person_service)
 ) -> List[Person]:
     body = {'query': {'multi_match': {'query': query, "fuzziness": "auto", 'fields': ['full_name']}}} \
@@ -34,7 +35,7 @@ async def persons_search(
         page_number=page_size * page_number - page_size,
     )
     if not persons:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail='Persons not found.')
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.PERSONS_NOT_FOUND)
     return [Person.parse_obj(person) for person in persons]
 
 
@@ -42,5 +43,5 @@ async def persons_search(
 async def person_detail(person_id: str, person_service: PersonService = Depends(get_person_service)) -> Person:
     person = await person_service.get_by_id(person_id)
     if not person:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail='Person not found.')
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.PERSON_NOT_FOUND)
     return Person.parse_obj(person)

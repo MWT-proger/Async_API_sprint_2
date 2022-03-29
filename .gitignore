@@ -91,6 +91,7 @@ local_settings.py
 ### ETL ###
 etl/volumes/*.txt
 etl/volumes/*.log
+etl/volumes/*.json
 
 
 ### Elastic ###

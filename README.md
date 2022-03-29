@@ -49,25 +49,25 @@ docker-compose -f docker-compose.yml exec movies python load_data.py
 ### API для онлайн-кинотеатра 
 **Read-only API для онлайн-кинотеатра** 
 
-после запуска доступен по [http://localhost:9000/api/openapi](http://localhost:9000/api/openapi)
+после запуска доступен по [http://localhost/api/openapi](http://localhost/api/openapi)
 
 Там вы можете найти все ручки 
 
 Такие как:
 
-1. Полнотекстовый поиск по кинопроизведениям  [http://localhost:9000/api/v1/films/search/](http://localhost:9000/api/v1/films/search/)
+1. Полнотекстовый поиск по кинопроизведениям  [http://localhost/api/v1/films/search/](http://localhost/api/v1/films/search/)
 
-1. Список фильмов с возможность филтрации, сортировки и пагинации [http://localhost:9000/api/v1​/films​/](http://localhost:9000/api​/v1​/films​/)
+1. Список фильмов с возможность филтрации, сортировки и пагинации [http://localhost/api/v1​/films​/](http://localhost/api​/v1​/films​/)
 
-1. Отдельную страницу фильма [http://localhost:9000/api/v1/films/{film_id}](http://localhost:9000/api/v1/films/{film_id})
+1. Отдельную страницу фильма [http://localhost/api/v1/films/{film_id}](http://localhost/api/v1/films/{film_id})
 
-1. Список жанров [http://localhost:9000/api/v1/genres/](http://localhost:9000/api/v1/genres/)
+1. Список жанров [http://localhost/api/v1/genres/](http://localhost/api/v1/genres/)
 
-1. Отдельную страницу жанра [http://localhost:9000/api/v1/genres/{genre_id}](http://localhost:9000/api/v1/genres/{genre_id})
+1. Отдельную страницу жанра [http://localhost/api/v1/genres/{genre_id}](http://localhost/api/v1/genres/{genre_id})
 
-1. Полнотекстовый поиск по персонам [http://localhost:9000/api/v1/persons/search](http://localhost:9000/api/v1/persons/search)
+1. Полнотекстовый поиск по персонам [http://localhost/api/v1/persons/search](http://localhost/api/v1/persons/search)
 
-1. Отдельную страницу персоны [http://localhost:9000/api/v1/persons/{person_id}](http://localhost:9000/api/v1/persons/{person_id})
+1. Отдельную страницу персоны [http://localhost/api/v1/persons/{person_id}](http://localhost/api/v1/persons/{person_id})
 
 ### Админ панель 
 после запуска доступна по [http://localhost/admin/](http://localhost/admin/)
