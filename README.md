@@ -70,7 +70,7 @@ docker-compose -f docker-compose.yml exec movies python load_data.py
 1. Отдельную страницу персоны [http://localhost:9000/api/v1/persons/{person_id}](http://localhost:9000/api/v1/persons/{person_id})
 
 ### Админ панель 
-после запуска доступна по [http://localhost:8000/admin/](http://localhost:8000/admin/)
+после запуска доступна по [http://localhost/admin/](http://localhost/admin/)
 
 **В стадии разработки доступен демо пользователь!**
 

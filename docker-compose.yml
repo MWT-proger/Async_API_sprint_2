@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   movies-db:
     image: postgres:14-alpine
     volumes:
@@ -10,26 +11,29 @@ services:
       - .env.db
     expose:
       - 5432
+
   movies:
     image: mwtechdocker2/admin_panel:v1
     volumes:
       - static_volume:/usr/src/app/static
-    ports:
-      - "8000:7000"
+    expose:
+      - "8000"
     env_file:
       - .env
     depends_on:
       - movies-db
+
   fastapi:
     build: ./fastapi
     volumes:
       - ./fastapi/:/usr/src/fastapi/
-    ports:
-      - "9000:8000"
+    expose:
+      - "9000"
     env_file:
       - .env
     depends_on:
       - movies-db
+
   nginx:
     image: nginx:1.21.6
     volumes:
@@ -40,6 +44,7 @@ services:
       - movies
     ports:
       - "80:80"
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     environment:
@@ -47,6 +52,7 @@ services:
       - ES_JAVA_OPTS=-Xms200m -Xmx200m
     expose:
       - 9200
+
   etl:
     image: mwtechdocker/etl:v1
     deploy:
@@ -60,6 +66,7 @@ services:
     depends_on:
       - movies-db
       - elasticsearch
+
   redis:
     image: redis:alpine
     restart: always
