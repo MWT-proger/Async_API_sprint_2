@@ -21,7 +21,11 @@ make full_upload
 
 для начала загрузить образы и развернуть контейнеры
 ```
-docker-compose up -d --build 
+docker-compose up -d --build
+docker-compose -f docker-compose.yml exec movies python manage.py migrate movies --fake
+docker-compose -f docker-compose.yml exec movies python manage.py migrate
+docker-compose -f docker-compose.yml exec movies python manage.py collectstatic --noinput
+docker-compose -f docker-compose.yml exec movies python load_data.py
 ```
 
 произвести миграции для Админ панели
