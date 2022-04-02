@@ -1,11 +1,11 @@
 from http import HTTPStatus
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-
-from services.films import FilmService, get_film_service
-from models.film import FilmDetail, FilmList
 from api import constant
+from models.film import FilmDetail, FilmList
+from services.films import FilmService, get_film_service
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 router = APIRouter()
 
@@ -30,13 +30,13 @@ async def film_details(film_id: str, film_service: FilmService = Depends(get_fil
 
 
 @router.get('/', response_model=List[FilmList])
-async def film_list(sort: Optional[str] = Query(None, alias = "sort"),
-                    filter_genre: Optional[str] = Query(None, alias = "filter[genre]"),
-                    page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
-                    page_size: int = Query(50, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
+async def film_list(sort: Optional[str] = Query(None, alias="sort"),
+                    filter_genre: Optional[str] = Query(None, alias="filter[genre]"),
+                    page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
+                    page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
                     film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
-    films = await film_service.get_specific_film_list(
+    films = await film_service.get_specific_data(
         sort=sort,
         filter_genre=filter_genre,
         page_size=page_size,
@@ -47,13 +47,13 @@ async def film_list(sort: Optional[str] = Query(None, alias = "sort"),
     return films
 
 
-@router.get('/search/', response_model=List[FilmList])
-async def film_list_search(query: Optional[str] = Query(None, alias = "query"),
-                           page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
-                           page_size: int = Query(50, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
+@router.get('/search', response_model=List[FilmList])
+async def film_list_search(query: Optional[str] = Query(None, alias="query"),
+                           page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
+                           page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
                            film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
-    films = await film_service.get_specific_film_list(
+    films = await film_service.get_specific_data(
         query_search=query,
         page_size=page_size,
         page_number=page_number

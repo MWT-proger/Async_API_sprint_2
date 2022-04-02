@@ -1,0 +1,26 @@
+from abc import ABC, abstractmethod
+
+
+class RedisBase(ABC):
+    @abstractmethod
+    def _get(self, key: str):
+        pass
+
+    @abstractmethod
+    def set(self, key: str, value: str, expire: int) -> None:
+        pass
+
+    @abstractmethod
+    def get_data(self, index, key):
+        pass
+
+
+class ElasticBase(ABC):
+
+    @abstractmethod
+    def get_by_id(self, index: str, dataclass, key: str):
+        pass
+
+    @abstractmethod
+    def search_data(self, query=None, index=None, dataclass=None, size=None, number=None):
+        pass

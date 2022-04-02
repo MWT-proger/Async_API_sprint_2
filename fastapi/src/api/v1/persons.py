@@ -1,11 +1,11 @@
 from http import HTTPStatus
-from typing import List, Optional, Dict, Union
+from typing import Dict, List, Optional, Union
 
-from pydantic import BaseModel
-
-from fastapi import APIRouter, Query, Depends, HTTPException
-from services.persons import PersonService, get_person_service
 from api import constant
+from pydantic import BaseModel
+from services.persons import PersonService, get_person_service
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 router = APIRouter()
 
@@ -22,15 +22,12 @@ class Person(BaseModel):
 @router.get('/search', response_model=List[Person])
 async def persons_search(
         query: Optional[str] = Query(None),
-        page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
-        page_size: int = Query(20, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
+        page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
+        page_size: int = Query(20, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
         person_service: PersonService = Depends(get_person_service)
 ) -> List[Person]:
-    body = {'query': {'multi_match': {'query': query, "fuzziness": "auto", 'fields': ['full_name']}}} \
-        if query else {'query': {'match_all': {}}}
-
-    persons = await person_service.search_persons(
-        body=body,
+    persons = await person_service.get_specific_data(
+        query_search=query,
         page_size=page_size,
         page_number=page_size * page_number - page_size,
     )

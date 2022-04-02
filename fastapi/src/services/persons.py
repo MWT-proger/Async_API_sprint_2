@@ -1,65 +1,61 @@
 from functools import lru_cache
+from typing import List, Optional
 
 from aioredis import Redis
-from db.elastic import get_elastic
-from db.redis import get_redis
-from elasticsearch import AsyncElasticsearch, NotFoundError
-from models.person import Person, PERSON_INDEX_ELASTIC
+from db.elastic import ElasticBase, ElasticService, get_elastic
+from db.redis import RedisBase, RedisService, get_redis
+from elasticsearch import AsyncElasticsearch
+from models.person import PERSON_INDEX_ELASTIC, Person
+from services.base import BaseService
+from tools.cacheable import cacheable
 
-from typing import List, Optional
 from fastapi import Depends
 
 PERSON_CACHE_EXPIRE_IN_SECONDS = 60 * 5
 
 
-class PersonService:
-    def __init__(self, redis: Redis, elastic: AsyncElasticsearch):
+class PersonService(BaseService):
+    def __init__(self, redis: RedisBase, elasticsearch: RedisBase):
         self.redis = redis
-        self.elastic = elastic
+        self.elasticsearch = elasticsearch
+        self.key = None
 
+    @cacheable(prefix=PERSON_INDEX_ELASTIC, cache_expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
     async def get_by_id(self, person_id: str) -> Person:
         """Возвращает объект персоны"""
-        person = await self._get_person_from_cache(person_id)
+        person = await self.redis.get_data(PERSON_INDEX_ELASTIC, Person, key=person_id)
         if not person:
-            person = await self._get_person_from_elastic(person_id)
+            person = await self.elasticsearch.get_by_id(PERSON_INDEX_ELASTIC, Person, key=person_id)
             if not person:
                 return None
-            await self._put_person_to_cache(person)
         return person
 
-    async def _get_person_from_elastic(self, person_id: str) -> Optional[Person]:
-        try:
-            doc = await self.elastic.get(PERSON_INDEX_ELASTIC, person_id)
-        except NotFoundError:
-            return None
-        return Person(**doc['_source'])
-
-    async def _put_person_to_cache(self, person: Person) -> None:
-        """Складывает данные о персоне в кэш"""
-        await self.redis.set('person:{id}'.format(id=person.id), person.json(), expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
-
-    async def _get_person_from_cache(self, person_id):
-        """Получает данные о персоне из кэша"""
-        data = await self.redis.get('person:{id}'.format(id=person_id))
-        if not data:
-            return None
-        return Person.parse_raw(data)
-
-    async def search_persons(self, body, page_size, page_number) -> Optional[List[Person]]:
+    @cacheable(prefix=PERSON_INDEX_ELASTIC, cache_expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
+    async def get_specific_data(self,
+                                query_search: str = None,
+                                page_size: int = 50,
+                                page_number: int = 1,
+                                ) -> Optional[List[Person]]:
         """Поиск персон по параметрам"""
-        persons = await self._get_persons_from_elastic(body, page_size, page_number)
+        self.key = 'query_search: %s, page_size:%s, page_number:%s' \
+                   % (query_search, page_size, page_number)
+        persons = await self.redis.get_data(PERSON_INDEX_ELASTIC, Person, key=self.key)
         if not persons:
-            return None
+            body = await self._get_search_request(query_search)
+            persons = await self.elasticsearch.search_data(
+                query=body,
+                index=PERSON_INDEX_ELASTIC,
+                dataclass=Person,
+                size=page_size,
+                number=page_number
+            )
+            if not persons:
+                return None
         return persons
 
-    async def _get_persons_from_elastic(self, body, page_size, page_number) -> List[Person]:
-        persons = await self.elastic.search(
-            index='persons',
-            body=body,
-            size=page_size,
-            from_=page_number
-        )
-        return [Person(**person['_source']) for person in persons['hits']['hits']]
+    async def _get_search_request(self, query) -> dict:
+        return {'query': {'multi_match': {'query': query, "fuzziness": "auto", 'fields': ['full_name']}}} \
+            if query else None
 
 
 @lru_cache()
@@ -67,4 +63,4 @@ def get_person_service(
         redis: Redis = Depends(get_redis),
         elasticsearch: AsyncElasticsearch = Depends(get_elastic)
 ) -> PersonService:
-    return PersonService(redis, elasticsearch)
+    return PersonService(RedisService(redis), ElasticService(elasticsearch))
