@@ -1,0 +1,7 @@
+services:
+  tests:
+    build: .
+    volumes:
+      - ./:/usr/src/tests/functional/
+    entrypoint: >
+      sh -c "pytest"

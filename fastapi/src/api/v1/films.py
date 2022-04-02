@@ -52,7 +52,7 @@ async def film_list_search(query: Optional[str] = Query(None, alias = "query"),
                            page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
                            page_size: int = Query(50, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
                            film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
-    """ Возвращает информацию по фильмам"""
+    """ Возвращает информацию по фильмам """
     films = await film_service.get_specific_film_list(
         query_search=query,
         page_size=page_size,
