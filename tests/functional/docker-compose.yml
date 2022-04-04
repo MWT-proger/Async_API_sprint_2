@@ -1,7 +1,16 @@
+version: '3.8'
+
 services:
   tests:
-    build: .
+    image: python:3.9.12
     volumes:
-      - ./:/usr/src/tests/functional/
+      - ./:/tests/functional/
     entrypoint: >
-      sh -c "pytest"
+      sh -c "pip install -r /tests/functional/requirements.txt
+      && python3 /tests/functional/utils/wait_for_es.py
+      && python3 /tests/functional/utils/wait_for_redis.py
+      && pytest /tests/functional/src"
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+volumes:
+  tests_data:

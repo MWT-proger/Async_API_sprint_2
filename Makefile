@@ -29,3 +29,5 @@ dev_full_upload:
 	docker-compose -f docker-compose.dev.yml exec movies python manage.py migrate
 	docker-compose -f docker-compose.dev.yml exec movies python manage.py collectstatic --noinput
 	docker-compose -f docker-compose.dev.yml exec movies python load_data.py
+api_tests:
+	docker-compose -f tests/functional/docker-compose.yml up
