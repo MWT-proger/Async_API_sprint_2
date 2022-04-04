@@ -1,11 +1,11 @@
 from http import HTTPStatus
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-
-from services.films import FilmService, get_film_service
-from models.film import FilmDetail, FilmList
 from api import constant
+from models.film import FilmDetail, FilmList
+from services.films import FilmService, get_film_service
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 router = APIRouter()
 
@@ -36,7 +36,7 @@ async def film_list(sort: Optional[str] = Query(None, alias="sort"),
                     page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
                     film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
-    films = await film_service.get_specific_film_list(
+    films = await film_service.get_specific_data(
         sort=sort,
         filter_genre=filter_genre,
         page_size=page_size,
@@ -53,7 +53,7 @@ async def film_list_search(query: Optional[str] = Query(None, alias="query"),
                            page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
                            film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
-    films = await film_service.get_specific_film_list(
+    films = await film_service.get_specific_data(
         query_search=query,
         page_size=page_size,
         page_number=page_number
