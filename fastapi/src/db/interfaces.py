@@ -3,15 +3,11 @@ from abc import ABC, abstractmethod
 
 class RedisBase(ABC):
     @abstractmethod
-    def _get(self, key: str):
+    def get(self, key: str):
         pass
 
     @abstractmethod
     def set(self, key: str, value: str, expire: int) -> None:
-        pass
-
-    @abstractmethod
-    def get_data(self, index, key):
         pass
 
 

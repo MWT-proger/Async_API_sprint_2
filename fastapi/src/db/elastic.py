@@ -16,15 +16,15 @@ class ElasticService(ElasticBase):
         self.elasticsearch = elasticsearch
 
     @backoff.on_exception(backoff.expo, ConnectionError, max_time=10, factor=2)
-    async def get_by_id(self, index: str, dataclass, key: str):
+    async def get_by_id(self, index: str, key: str):
         try:
             doc = await self.elasticsearch.get(index, key)
         except NotFoundError:
             return None
-        return dataclass.parse_obj(doc['_source'])
+        return doc['_source']
 
     @backoff.on_exception(backoff.expo, ConnectionError, max_time=10, factor=2)
-    async def search_data(self, query=None, index=None, dataclass=None, size=50, number=None):
+    async def search_data(self, query=None, index=None, size=50, number=None):
         body = query or {'query': {'match_all': {}}}
 
         data = await self.elasticsearch.search(
@@ -33,4 +33,4 @@ class ElasticService(ElasticBase):
             size=size,
             from_=size * number - size if number else None
         )
-        return [dataclass.parse_obj(item['_source']) for item in data['hits']['hits']]
+        return [item['_source'] for item in data['hits']['hits']]

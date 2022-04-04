@@ -23,12 +23,12 @@ class PersonService(BaseService):
     @cacheable(prefix=PERSON_INDEX_ELASTIC, cache_expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
     async def get_by_id(self, person_id: str) -> Person:
         """Возвращает объект персоны"""
-        person = await self.redis.get_data(PERSON_INDEX_ELASTIC, Person, key=person_id)
+        person = await self.redis.get(PERSON_INDEX_ELASTIC, key=person_id)
         if not person:
-            person = await self.elasticsearch.get_by_id(PERSON_INDEX_ELASTIC, Person, key=person_id)
+            person = await self.elasticsearch.get_by_id(PERSON_INDEX_ELASTIC, key=person_id)
             if not person:
                 return None
-        return person
+        return Person.parse_obj(person)
 
     @cacheable(prefix=PERSON_INDEX_ELASTIC, cache_expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
     async def get_specific_data(self,
@@ -39,19 +39,18 @@ class PersonService(BaseService):
         """Поиск персон по параметрам"""
         self.key = 'query_search: %s, page_size:%s, page_number:%s' \
                    % (query_search, page_size, page_number)
-        persons = await self.redis.get_data(PERSON_INDEX_ELASTIC, Person, key=self.key)
+        persons = await self.redis.get(PERSON_INDEX_ELASTIC, key=self.key)
         if not persons:
             body = await self._get_search_request(query_search)
             persons = await self.elasticsearch.search_data(
                 query=body,
                 index=PERSON_INDEX_ELASTIC,
-                dataclass=Person,
                 size=page_size,
                 number=page_number
             )
             if not persons:
                 return None
-        return persons
+        return [Person.parse_obj(person) for person in persons]
 
     async def _get_search_request(self, query) -> dict:
         return {'query': {'multi_match': {'query': query, "fuzziness": "auto", 'fields': ['full_name']}}} \

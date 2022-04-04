@@ -32,29 +32,28 @@ class FilmService(BaseService):
         self.key = 'query_search: %s, sort:%s, filter_genre:%s, page_size:%s, page_number:%s' \
                    % (query_search, sort, filter_genre, page_size, page_number)
 
-        films = await self.redis.get_data(MOVIES_INDEX_ELASTIC, Film, key=self.key)
+        films = await self.redis.get(MOVIES_INDEX_ELASTIC, key=self.key)
         if not films:
             body = await self._get_search_request(query_search=query_search, sort=sort, filter_genre=filter_genre)
             films = await self.elasticsearch.search_data(
                 query=body,
                 index=MOVIES_INDEX_ELASTIC,
-                dataclass=Film,
                 size=page_size,
                 number=page_number
             )
             if not films:
                 return None
-        return films
+        return [Film.parse_obj(film) for film in films]
 
     @cacheable(prefix=MOVIES_INDEX_ELASTIC, cache_expire=FILM_CACHE_EXPIRE_IN_SECONDS)
     async def get_by_id(self, film_id: str) -> Optional[Film]:
-        film = await self.redis.get_data(MOVIES_INDEX_ELASTIC, Film, key=film_id)
+        film = await self.redis.get(MOVIES_INDEX_ELASTIC, key=film_id)
 
         if not film:
-            film = await self.elasticsearch.get_by_id(MOVIES_INDEX_ELASTIC, Film, key=film_id)
+            film = await self.elasticsearch.get_by_id(MOVIES_INDEX_ELASTIC, key=film_id)
             if not film:
                 return None
-        return film
+        return Film.parse_obj(film)
 
     async def _get_search_request(self, query_search: str = None, sort: str = None,
                                   filter_genre: str = None) -> dict:
