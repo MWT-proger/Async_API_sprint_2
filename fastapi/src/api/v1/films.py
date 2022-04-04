@@ -30,10 +30,10 @@ async def film_details(film_id: str, film_service: FilmService = Depends(get_fil
 
 
 @router.get('/', response_model=List[FilmList])
-async def film_list(sort: Optional[str] = Query(None, alias = "sort"),
-                    filter_genre: Optional[str] = Query(None, alias = "filter[genre]"),
-                    page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
-                    page_size: int = Query(50, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
+async def film_list(sort: Optional[str] = Query(None, alias="sort"),
+                    filter_genre: Optional[str] = Query(None, alias="filter[genre]"),
+                    page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
+                    page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
                     film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
     films = await film_service.get_specific_film_list(
@@ -48,10 +48,10 @@ async def film_list(sort: Optional[str] = Query(None, alias = "sort"),
 
 
 @router.get('/search/', response_model=List[FilmList])
-async def film_list_search(query: Optional[str] = Query(None, alias = "query"),
-                           page_number: int = Query(1, alias = 'page[number]', title = constant.TITLE_PAGE_NUMBER),
-                           page_size: int = Query(50, alias = 'page[size]', title = constant.TITLE_PAGE_SIZE),
-                           film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
+async def get_specific_film_list(query: Optional[str] = Query(None, alias="query"),
+                                 page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
+                                 page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
+                                 film_service: FilmService = Depends(get_film_service)) -> List[FilmList]:
     """ Возвращает информацию по фильмам"""
     films = await film_service.get_specific_film_list(
         query_search=query,
