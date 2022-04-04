@@ -50,5 +50,6 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     person_id uuid NOT NULL,
     role TEXT not null,
     created timestamp with time zone,
+    modified timestamp with time zone,
     UNIQUE (film_work_id, person_id, role)
 );
