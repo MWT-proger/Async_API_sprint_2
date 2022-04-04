@@ -21,7 +21,10 @@ class RedisService(RedisBase):
         data = await self.redis.get(f'{index}: {key}' if key else index)
         if not data:
             return None
-        return json.loads(data)
+        if isinstance(data := json.loads(data), list):
+            return [json.loads(item) for item in data]
+        else:
+            return data
 
     @backoff.on_exception(backoff.expo, RedisError, max_time=10, factor=2)
     async def set(self, key: str, value: str, expire: int) -> None:
