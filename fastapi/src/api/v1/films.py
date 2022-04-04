@@ -47,7 +47,7 @@ async def film_list(sort: Optional[str] = Query(None, alias="sort"),
     return films
 
 
-@router.get('/search/', response_model=List[FilmList])
+@router.get('/search', response_model=List[FilmList])
 async def film_list_search(query: Optional[str] = Query(None, alias="query"),
                            page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
                            page_size: int = Query(50, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
