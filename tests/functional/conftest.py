@@ -1,14 +1,13 @@
-import aiohttp
 import asyncio
+from dataclasses import dataclass
+from typing import Optional
+
+import aiohttp
 import aioredis
 import pytest
-
-from typing import Optional
-from dataclasses import dataclass
-from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
-
 from functional.settings import TestSettings
+from multidict import CIMultiDictProxy
 
 settings = TestSettings()
 

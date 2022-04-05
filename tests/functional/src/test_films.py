@@ -1,5 +1,4 @@
 import pytest
-
 from functional.urls import TestUrls
 
 urls = TestUrls()
