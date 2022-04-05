@@ -1,17 +1,25 @@
 from time import sleep
 
 from elasticsearch import Elasticsearch
+
 from settings import TestSettings
+from app_logger import get_logger
+
 
 settings = TestSettings()
+logger = get_logger('Elasticsearch connection')
 
 
 def wait_for_elastic():
+    logger.info("start")
+
     elastic = Elasticsearch(hosts=[f'{settings.es_host}:{settings.es_port}'])
+
     while not elastic.ping():
-        print("Elasticsearch connection error!")
+        logger.error("connection error!")
         sleep(1)
-    print("Successful connect to elasticsearch")
+
+    logger.info("successful connection!")
 
 
 if __name__ == '__main__':

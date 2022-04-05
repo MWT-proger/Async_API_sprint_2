@@ -1,20 +1,25 @@
 from time import sleep
 
 from redis import ConnectionError, Redis
+
 from settings import TestSettings
+from app_logger import get_logger
+
 
 settings = TestSettings()
+logger = get_logger('Redis connection')
 
 
 def wait_for_redis():
+    logger.info("start")
     redis = Redis(settings.redis_host)
     while True:
         try:
             redis.ping()
-            print("Successful connect to redis")
+            logger.info("successful connection!")
             break
         except ConnectionError:
-            print("Connection error!")
+            logger.error("connection error!")
             sleep(1)
 
 
