@@ -66,6 +66,7 @@ def make_get_request(session):
 
 
 class ElasticORM:
+    """Позволяет загружать данные в Elastic и удалять их"""
     def __init__(self, path_file: str, index: str, es_client: AsyncElasticsearch):
         self.path_file = path_file
         self.index = index
