@@ -1,0 +1,575 @@
+[{
+  "id": "3f8873be-f6b1-4f3f-8a01-873924659851",
+  "imdb_rating": 1.0,
+  "genre": [
+    {
+      "id": "56b541ab-4d66-4021-8708-397762bff2d4",
+      "name": "Music"
+    },
+    {
+      "id": "6d141ad2-d407-4252-bda4-95590aaf062a",
+      "name": "Documentary"
+    }
+  ],
+  "title": "Justin Bieber: A Star Was Born",
+  "description": null,
+  "director": null,
+  "actors_names": [
+    "Justin Bieber"
+  ],
+  "writers_names": null,
+  "actors": [
+    {
+      "id": "a967bacf-35ca-42ef-9bfd-3d003a957125",
+      "name": "Justin Bieber"
+    }
+  ],
+  "writers": null
+},
+  {
+    "id": "b9151ead-cf2f-4e14-aeb9-c4617f68848f",
+    "imdb_rating": 1.5,
+    "genre": [
+      {
+        "id": "6c162475-c7ed-4461-9184-001ef3d9f26e",
+        "name": "Sci-Fi"
+      }
+    ],
+    "title": "Star Quest: The Odyssey",
+    "description": "As our world expands to include the entire galaxy everyone rushes to claim their own piece of this new world and thousands of colonies arise. With no core government, rogue colonies begin to wreak havoc and without a centralized army to protect the innocent peace is all but lost. Now at the end of mankind's greatest battle, empires will crumble, alliances will form, enemies will rise, and heroes will fall.",
+    "director": [
+      {
+        "id": "bfbc0095-4b95-49e5-b72e-3e477f4e736c",
+        "name": "Jon Bonnell"
+      }
+    ],
+    "actors_names": [
+      "Aaron Ginn-Forsberg",
+      "Davina Joy",
+      "James Ray",
+      "Tamara McDaniel"
+    ],
+    "writers_names": [
+      "Carlos Perez",
+      "Ted Chalmers"
+    ],
+    "actors": [
+      {
+        "id": "4959e5b7-d157-4cdf-bc4f-5eb3cf8bd57f",
+        "name": "Aaron Ginn-Forsberg"
+      },
+      {
+        "id": "4f27971e-c80a-4894-be67-721fe7ff6a7f",
+        "name": "Davina Joy"
+      },
+      {
+        "id": "571bc9f9-83ab-44f6-92e4-ec6e47772765",
+        "name": "Tamara McDaniel"
+      },
+      {
+        "id": "ddc8d633-79d5-4313-ad44-45e2ece6602b",
+        "name": "James Ray"
+      }
+    ],
+    "writers": [
+      {
+        "id": "c4eb46cf-da3c-43ac-9b03-52430cf764ea",
+        "name": "Ted Chalmers"
+      },
+      {
+        "id": "f284b780-368c-4c60-8d9e-77328cbc0bae",
+        "name": "Carlos Perez"
+      }
+    ]
+  },
+  {
+    "id": "c69c0c98-1eef-4bc1-92da-192d7b637d58",
+    "imdb_rating": 1.6,
+    "genre": [
+      {
+        "id": "6c162475-c7ed-4461-9184-001ef3d9f26e",
+        "name": "Sci-Fi"
+      }
+    ],
+    "title": "Battle Star Wars",
+    "description": "When the leader of the evil Coalition threatens to destroy a Rebel planet for its resources, his daughter will have no choice but to join the Rebel side and fight for what is right.",
+    "director": [
+      {
+        "id": "a55c16b7-7c23-44cf-bdb9-a0d783a6e0b6",
+        "name": "James Thomas"
+      }
+    ],
+    "actors_names": [
+      "Aimee Stolte",
+      "Alyson Gorske",
+      "Benedikt Sebastian",
+      "Justin Berti"
+    ],
+    "writers_names": [
+      "Jeremy M. Inman"
+    ],
+    "actors": [
+      {
+        "id": "0a6aa9ab-e2a3-4462-a4b1-ca829dca7f70",
+        "name": "Alyson Gorske"
+      },
+      {
+        "id": "2b070560-3310-4982-af61-f53f21996c00",
+        "name": "Justin Berti"
+      },
+      {
+        "id": "8b950e67-09aa-424b-9770-3f6b6dc9e83f",
+        "name": "Benedikt Sebastian"
+      },
+      {
+        "id": "8e799d6c-22d6-4f48-8578-c2d7f1bce139",
+        "name": "Aimee Stolte"
+      }
+    ],
+    "writers": [
+      {
+        "id": "d83055a6-577f-47f6-b939-989fba05e2e7",
+        "name": "Jeremy M. Inman"
+      }
+    ]
+  },
+  {
+    "id": "463d7234-2af1-4e54-a353-2a8c2c269103",
+    "imdb_rating": 1.8,
+    "genre": [
+      {
+        "id": "120a21cf-9097-479e-904a-13dd7198c1dd",
+        "name": "Adventure"
+      },
+      {
+        "id": "1cacff68-643e-4ddd-8f57-84b62538081a",
+        "name": "Drama"
+      },
+      {
+        "id": "3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff",
+        "name": "Action"
+      },
+      {
+        "id": "5373d043-3f41-4ea8-9947-4b746c601bbd",
+        "name": "Comedy"
+      },
+      {
+        "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
+        "name": "Mystery"
+      }
+    ],
+    "title": "Chatur Singh Two Star",
+    "description": "After an incident at Dadar Railway Station, Mumbai's Police Commissioner Rajpal K. Sinha suspends bumbling police detective, Chatur Singh, but is compelled to reinstate him after no-one within his department wants to be assigned with the security of disgraced and arrested Agriculture Minister Y.Y. Singh, who, after feigning an illness, is hospitalized. Chatur and his deputy, Pappu Panther, accordingly attend to the hospital and screen everyone that goes to visit him, including his wife, Savitri, and Secretary, Sonia Verma. Shortly thereafter, Singh is assassinated, Sonia is arrested as a suspect and lodged in a cell and refuses to divulge any information. Chatur decides to let her escape so that he can follow her and find out who was behind this high-profile killing. Sonia does manage to escape but he is not quick enough to follow, and she ends up in Capetown. Chatur and Pappu must now travel there and not only locate and apprehend Sonia but also must try to investigate her involvement in her employer's assassination.",
+    "director": [
+      {
+        "id": "ef3d044c-786b-436d-aae3-4005850ef093",
+        "name": "Ajay Chandhok"
+      }
+    ],
+    "actors_names": [
+      "Ameesha Patel",
+      "Anupam Kher",
+      "Sanjay Dutt",
+      "Satish Kaushik"
+    ],
+    "writers_names": [
+      "Rumi Jaffery",
+      "Sai Kabir"
+    ],
+    "actors": [
+      {
+        "id": "4c683fe4-7444-4dc5-a183-c972ab858d5f",
+        "name": "Ameesha Patel"
+      },
+      {
+        "id": "939381a0-bc18-4cee-b449-6e58bbe04a10",
+        "name": "Anupam Kher"
+      },
+      {
+        "id": "a494cd09-ea6c-4aaa-9531-6c36bb2924af",
+        "name": "Sanjay Dutt"
+      },
+      {
+        "id": "eb45ae2a-837a-4181-9df1-864f9fd42945",
+        "name": "Satish Kaushik"
+      }
+    ],
+    "writers": [
+      {
+        "id": "2b18ff52-672a-4c46-b515-53494ba7ce54",
+        "name": "Rumi Jaffery"
+      },
+      {
+        "id": "7d8208e2-7137-465c-9728-75c0f7bb869f",
+        "name": "Sai Kabir"
+      }
+    ]
+  },
+  {
+    "id": "a9bbc1d8-bb8a-41d2-b61a-d8ddc9b31ede",
+    "imdb_rating": 1.8,
+    "genre": [
+      {
+        "id": "ca124c76-9760-4406-bfa0-409b1e38d200",
+        "name": "Biography"
+      }
+    ],
+    "title": "Amy Winehouse: Fallen Star",
+    "description": "A biography on the life of Amy Winehouse.",
+    "director": [
+      {
+        "id": "bcacce93-0190-47b9-8350-68a463ac99f8",
+        "name": "Jason Boritz"
+      }
+    ],
+    "actors_names": [
+      "Alain Azoulay",
+      "Josh Mann",
+      "Julia Eringer",
+      "Sarah Rochelle"
+    ],
+    "writers_names": [
+      "Rose Berkman"
+    ],
+    "actors": [
+      {
+        "id": "0f8c8862-70bd-4651-80a8-882a8ba2ca04",
+        "name": "Julia Eringer"
+      },
+      {
+        "id": "18faf5f6-2fc1-4f72-b47e-5e6bb31b2209",
+        "name": "Josh Mann"
+      },
+      {
+        "id": "45605628-64c2-4a57-a1ff-ec9e3158f1da",
+        "name": "Alain Azoulay"
+      },
+      {
+        "id": "712cad1d-96a7-45f0-986f-c80c030c6536",
+        "name": "Sarah Rochelle"
+      }
+    ],
+    "writers": [
+      {
+        "id": "7d2a54c4-7817-4ae0-807f-1c9256c93d92",
+        "name": "Rose Berkman"
+      }
+    ]
+  },
+  {
+    "id": "547147ed-d835-4c22-8c42-4a800d6f32b0",
+    "imdb_rating": 1.9,
+    "genre": [
+      {
+        "id": "6c162475-c7ed-4461-9184-001ef3d9f26e",
+        "name": "Sci-Fi"
+      }
+    ],
+    "title": "Star Force: Fugitive Alien II",
+    "description": "In this second film compiled from two episodes of a Japanese TV serial, Captain Joe, reformed interstellar marauder Ken and the rest of the crew of the Backus-3 set off to destroy an alien race's super-weapon, face off with Ken's vengeful ex-lover Rita and confront the sinister leader of the marauding Star Wolves.",
+    "director": [
+      {
+        "id": "4463b93a-a4bc-4bc3-9a7d-01a0289e419a",
+        "name": "Kiyosumi Kuzakawa"
+      },
+      {
+        "id": "b7b554bf-82bc-4967-96ed-4648f447ebca",
+        "name": "Minoru Kanaya"
+      }
+    ],
+    "actors_names": [
+      "Chôei Takahashi",
+      "Jô Shishido",
+      "Miyuki Tanigawa",
+      "Tatsuya Azuma"
+    ],
+    "writers_names": [
+      "Bunzô Wakatsuki",
+      "Keiichi Abe"
+    ],
+    "actors": [
+      {
+        "id": "17458a7e-18cb-4789-b459-0987421b29b3",
+        "name": "Tatsuya Azuma"
+      },
+      {
+        "id": "95d0ee72-4365-4af2-9562-b0e2a59f7e9e",
+        "name": "Miyuki Tanigawa"
+      },
+      {
+        "id": "98b93a7d-6aca-4b13-a8d3-3d4e05e4f074",
+        "name": "Jô Shishido"
+      },
+      {
+        "id": "cb0ddba8-7cd0-49d0-8822-ede148f778d9",
+        "name": "Chôei Takahashi"
+      }
+    ],
+    "writers": [
+      {
+        "id": "e65bfab5-6589-43cd-a48a-24d26b53a2be",
+        "name": "Keiichi Abe"
+      },
+      {
+        "id": "ef1c60d8-11fc-4f53-bc9b-f8bad0f5e00e",
+        "name": "Bunzô Wakatsuki"
+      }
+    ]
+  },
+  {
+    "id": "134989c3-3b20-4ae7-8092-3e8ad2333d59",
+    "imdb_rating": 2.1,
+    "genre": [
+      {
+        "id": "120a21cf-9097-479e-904a-13dd7198c1dd",
+        "name": "Adventure"
+      },
+      {
+        "id": "55c723c1-6d90-4a04-a44b-e9792040251a",
+        "name": "Family"
+      },
+      {
+        "id": "6c162475-c7ed-4461-9184-001ef3d9f26e",
+        "name": "Sci-Fi"
+      },
+      {
+        "id": "9c91a5b2-eb70-4889-8581-ebe427370edd",
+        "name": "Musical"
+      }
+    ],
+    "title": "The Star Wars Holiday Special",
+    "description": "It is Life Day, a holiday that is celebrated on Chewbacca's home planet Kashyyyk. Chewie and Han Solo are trying to get to the planet where Chewie's family is waiting for him, but the Empire is out searching for the Rebels, giving everyone a hard time. While we are waiting we get a look at the everyday life of a Wookiee family. We meet all the familiar characters from Star Wars: Episode IV - A New Hope (1977) and we are introduced to Boba Fett during a short cartoon. We also pay a visit to the Cantina and meet all the monsters again.",
+    "director": [
+      {
+        "id": "c97f0b2f-6cb0-459e-8547-46f8f4e7c1d7",
+        "name": "David Acomba"
+      },
+      {
+        "id": "dc448893-7942-4677-a557-d8b1aa728ccf",
+        "name": "Steve Binder"
+      }
+    ],
+    "actors_names": [
+      "Anthony Daniels",
+      "Carrie Fisher",
+      "Harrison Ford",
+      "Mark Hamill"
+    ],
+    "writers_names": [
+      "Bruce Vilanch",
+      "George Lucas",
+      "Leonard Ripps",
+      "Mitzie Welch",
+      "Pat Proft",
+      "Rod Warren"
+    ],
+    "actors": [
+      {
+        "id": "26e83050-29ef-4163-a99d-b546cac208f8",
+        "name": "Mark Hamill"
+      },
+      {
+        "id": "5b4bf1bc-3397-4e83-9b17-8b10c6544ed1",
+        "name": "Harrison Ford"
+      },
+      {
+        "id": "86f1f44b-39f5-41a6-8b3b-af5a9ed09858",
+        "name": "Anthony Daniels"
+      },
+      {
+        "id": "b5d2b63a-ed1f-4e46-8320-cf52a32be358",
+        "name": "Carrie Fisher"
+      }
+    ],
+    "writers": [
+      {
+        "id": "3a79bcae-0fff-4aea-b841-d4ce74b8a2ff",
+        "name": "Bruce Vilanch"
+      },
+      {
+        "id": "47c4a7d9-9fb6-444d-9852-56df2d3a98c1",
+        "name": "Mitzie Welch"
+      },
+      {
+        "id": "70adcb88-ed89-4654-866e-9b124b95c82b",
+        "name": "Rod Warren"
+      },
+      {
+        "id": "7f4382be-73f0-4741-bd46-6f895099b661",
+        "name": "Pat Proft"
+      },
+      {
+        "id": "a5a8f573-3cee-4ccc-8a2b-91cb9f55250a",
+        "name": "George Lucas"
+      },
+      {
+        "id": "f112018e-844a-49ba-a880-89ca8cc2389e",
+        "name": "Leonard Ripps"
+      }
+    ]
+  },
+  {
+    "id": "f06315d4-eab6-4fdc-b768-7c046cedfd9b",
+    "imdb_rating": 2.1,
+    "genre": [
+      {
+        "id": "56b541ab-4d66-4021-8708-397762bff2d4",
+        "name": "Music"
+      }
+    ],
+    "title": "Starmania. Österreich sucht den neuen Star",
+    "description": null,
+    "director": null,
+    "actors_names": [
+      "Arabella Kiesbauer",
+      "Gernot Pachernigg",
+      "Nadine Beiler",
+      "Thomas Neuwirth"
+    ],
+    "writers_names": [
+      "Mischa Zickler"
+    ],
+    "actors": [
+      {
+        "id": "187e5115-808c-49e9-b172-2ece92b68ae3",
+        "name": "Thomas Neuwirth"
+      },
+      {
+        "id": "2da3981e-6b78-4430-b693-b2a9bd791e68",
+        "name": "Gernot Pachernigg"
+      },
+      {
+        "id": "3d35f60e-9ec8-4148-b894-1d1913159b7c",
+        "name": "Nadine Beiler"
+      },
+      {
+        "id": "50596339-355b-4abb-9955-645f3e3ecf34",
+        "name": "Arabella Kiesbauer"
+      }
+    ],
+    "writers": [
+      {
+        "id": "f155d2b9-3714-4a3e-8dc3-ed8a0e0466c8",
+        "name": "Mischa Zickler"
+      }
+    ]
+  },
+  {
+    "id": "e60412c9-43d2-48c0-94a1-81c6b04af84e",
+    "imdb_rating": 2.4,
+    "genre": [
+      {
+        "id": "3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff",
+        "name": "Action"
+      },
+      {
+        "id": "5373d043-3f41-4ea8-9947-4b746c601bbd",
+        "name": "Comedy"
+      },
+      {
+        "id": "9c91a5b2-eb70-4889-8581-ebe427370edd",
+        "name": "Musical"
+      }
+    ],
+    "title": "Confessions of an Action Star",
+    "description": "A 'mocumentary' on the rise and fall of Chip and Dales dancer turned martial arts action star, Francis Allen Sledgewick, AKA Frank Sledge. When fame and fortune caused Frank to lose his sense of what's truely important, he realised he's going to have to get in touch with his roots if there's ever going to be a comeback.",
+    "director": [
+      {
+        "id": "ed6c1b7c-f0ed-454e-afa2-c308b5fbebd0",
+        "name": "Brad Martin"
+      }
+    ],
+    "actors_names": [
+      "Carrie-Anne Moss",
+      "David Leitch",
+      "Holmes Osborne",
+      "Kelly Hu"
+    ],
+    "writers_names": [
+      "David Leitch"
+    ],
+    "actors": [
+      {
+        "id": "2e07a545-9631-401e-9b8c-23c0fc813484",
+        "name": "Kelly Hu"
+      },
+      {
+        "id": "5d186722-3608-474d-82f0-02e6a2f18a8d",
+        "name": "Carrie-Anne Moss"
+      },
+      {
+        "id": "5f2c2140-9843-43b1-8398-1dd1c788a7e2",
+        "name": "Holmes Osborne"
+      },
+      {
+        "id": "f711b970-b3a3-40f4-befe-00b4eb8eff93",
+        "name": "David Leitch"
+      }
+    ],
+    "writers": [
+      {
+        "id": "f711b970-b3a3-40f4-befe-00b4eb8eff93",
+        "name": "David Leitch"
+      }
+    ]
+  },
+  {
+    "id": "c97c8fbc-4084-4e9b-a486-eb5fcfe6104b",
+    "imdb_rating": 2.4,
+    "genre": [
+      {
+        "id": "526769d7-df18-4661-9aa6-49ed24e9dfd8",
+        "name": "Thriller"
+      },
+      {
+        "id": "63c24835-34d3-4279-8d81-3c5f4ddb0cdc",
+        "name": "Crime"
+      },
+      {
+        "id": "f39d7b6d-aef2-40b1-aaf0-cf05e7048011",
+        "name": "Horror"
+      }
+    ],
+    "title": "Amateur Porn Star Killer 3: The Final Chapter",
+    "description": "Villainous voyeur Brandon (Shane Ryan) wreaks havoc and pure sexual violence on a poor young girl, Nikki (Regan Reece). Rather than lure her in like the first film, or gain her trust as a ...",
+    "director": [
+      {
+        "id": "64a738c9-6e99-4d4d-a6d0-23a1c5d9e3ed",
+        "name": "Shane Ryan"
+      }
+    ],
+    "actors_names": [
+      "Deserae Struthers",
+      "Krystal Star",
+      "Regan Reece",
+      "Shane Ryan"
+    ],
+    "writers_names": [
+      "Shane Ryan"
+    ],
+    "actors": [
+      {
+        "id": "0396118e-b946-4ed1-bf21-936fda7fada9",
+        "name": "Deserae Struthers"
+      },
+      {
+        "id": "64a738c9-6e99-4d4d-a6d0-23a1c5d9e3ed",
+        "name": "Shane Ryan"
+      },
+      {
+        "id": "a2e67f06-a349-4d5e-b24c-b5712290b58c",
+        "name": "Krystal Star"
+      },
+      {
+        "id": "c60e1c4b-56e4-4030-93a7-74d6c7b49ca7",
+        "name": "Regan Reece"
+      }
+    ],
+    "writers": [
+      {
+        "id": "64a738c9-6e99-4d4d-a6d0-23a1c5d9e3ed",
+        "name": "Shane Ryan"
+      }
+    ]
+  }
+]

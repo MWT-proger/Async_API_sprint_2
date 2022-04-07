@@ -3,7 +3,7 @@ from time import sleep
 from elasticsearch import Elasticsearch
 
 from settings import TestSettings
-from app_logger import get_logger
+from utils.app_logger import get_logger
 
 
 settings = TestSettings()

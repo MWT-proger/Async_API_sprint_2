@@ -1,11 +1,11 @@
 import pytest
-from functional.urls import TestUrls
+from functional.config import TestUrls
 
 urls = TestUrls()
 
 
 @pytest.mark.asyncio
-async def test_search_detailed(es_client, make_get_request):
+async def test_search_detailed(es_client, make_get_request, films_to_es):
     # Заполнение данных для теста
     # await es_client.bulk(...)
 

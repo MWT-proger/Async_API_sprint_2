@@ -9,3 +9,9 @@ BASE_URL_V1 = '{protocol}://{host}:{port}/api/v1'.format(protocol=settings.servi
 class TestUrls:
     search_films: str = BASE_URL_V1 + '/films/search/'
     films: str = BASE_URL_V1 + '/films/'
+
+
+class ElasticIndex:
+    films: str = 'movies'
+    persons: str = 'persons'
+    genres: str = 'genres'

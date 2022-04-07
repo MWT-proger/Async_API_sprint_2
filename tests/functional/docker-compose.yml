@@ -12,5 +12,3 @@ services:
       && pytest /tests/functional/src"
     extra_hosts:
         - "host.docker.internal:host-gateway"
-volumes:
-  tests_data:

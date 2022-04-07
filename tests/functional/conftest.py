@@ -1,15 +1,20 @@
 import asyncio
-from dataclasses import dataclass
-from typing import Optional
-
 import aiohttp
 import aioredis
 import pytest
+import json
+
+from dataclasses import dataclass
+from typing import Optional
 from elasticsearch import AsyncElasticsearch
-from functional.settings import TestSettings
 from multidict import CIMultiDictProxy
 
+from functional.config import ElasticIndex
+from functional.settings import TestSettings
+from functional.utils.transform import raw_data_to_es
+
 settings = TestSettings()
+es_index = ElasticIndex()
 
 
 @dataclass
@@ -58,3 +63,50 @@ def make_get_request(session):
                 status=response.status,
             )
     return inner
+
+
+class ElasticORM:
+    def __init__(self, path_file: str, index: str, es_client: AsyncElasticsearch):
+        self.path_file = path_file
+        self.index = index
+        self.es_client = es_client
+
+    async def load_data(self):
+        with open(self.path_file, 'r') as file:
+            raw_data = json.load(file)
+            data = raw_data_to_es(raw_data=raw_data, index=self.index)
+        await self.es_client.bulk(body='\n'.join(data) + '\n', index=self.index, refresh=True)
+
+    async def delete_data(self):
+        await self.es_client.delete_by_query(
+            body={
+                "query": {
+                    "match_all": {}
+                }
+            },
+            index=self.index
+        )
+
+
+@pytest.fixture(scope='session')
+async def films_to_es(es_client):
+    es_orm = ElasticORM(path_file='tests/functional/testdata/films.json', index=es_index.films, es_client=es_client)
+    await es_orm.load_data()
+    yield
+    await es_orm.delete_data()
+
+
+@pytest.fixture(scope='session')
+async def persons_to_es(es_client):
+    es_orm = ElasticORM(path_file='tests/functional/testdata/persons.json', index=es_index.persons, es_client=es_client)
+    await es_orm.load_data()
+    yield
+    await es_orm.delete_data()
+
+
+@pytest.fixture(scope='session')
+async def genres_to_es(es_client):
+    es_orm = ElasticORM(path_file='tests/functional/testdata/genres.json', index=es_index.genres, es_client=es_client)
+    await es_orm.load_data()
+    yield
+    await es_orm.delete_data()
