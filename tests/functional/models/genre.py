@@ -8,4 +8,3 @@ GENRES_LIST_SIZE = 100
 
 class Genre(BaseModel):
     name: str
-    description: Optional[str] = None

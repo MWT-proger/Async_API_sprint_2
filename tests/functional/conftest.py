@@ -9,12 +9,16 @@ from typing import Optional
 from elasticsearch import AsyncElasticsearch
 from multidict import CIMultiDictProxy
 
-from functional.config import ElasticIndex
+from functional.config import ElasticIndex, TestFilesPath
 from functional.settings import TestSettings
 from functional.utils.transform import raw_data_to_es
+from functional.models.person import Person
+from functional.models.film import FilmList
+from functional.models.genre import Genre
 
 settings = TestSettings()
 es_index = ElasticIndex()
+test_data = TestFilesPath()
 
 
 @dataclass
@@ -62,11 +66,13 @@ def make_get_request(session):
                 headers=response.headers,
                 status=response.status,
             )
+
     return inner
 
 
 class ElasticORM:
     """Позволяет загружать данные в Elastic и удалять их"""
+
     def __init__(self, path_file: str, index: str, es_client: AsyncElasticsearch):
         self.path_file = path_file
         self.index = index
@@ -91,7 +97,7 @@ class ElasticORM:
 
 @pytest.fixture(scope='session')
 async def films_to_es(es_client):
-    es_orm = ElasticORM(path_file='tests/functional/testdata/films.json', index=es_index.films, es_client=es_client)
+    es_orm = ElasticORM(path_file=test_data.films, index=es_index.films, es_client=es_client)
     await es_orm.load_data()
     yield
     await es_orm.delete_data()
@@ -99,7 +105,7 @@ async def films_to_es(es_client):
 
 @pytest.fixture(scope='session')
 async def persons_to_es(es_client):
-    es_orm = ElasticORM(path_file='tests/functional/testdata/persons.json', index=es_index.persons, es_client=es_client)
+    es_orm = ElasticORM(path_file=test_data.persons, index=es_index.persons, es_client=es_client)
     await es_orm.load_data()
     yield
     await es_orm.delete_data()
@@ -107,7 +113,25 @@ async def persons_to_es(es_client):
 
 @pytest.fixture(scope='session')
 async def genres_to_es(es_client):
-    es_orm = ElasticORM(path_file='tests/functional/testdata/genres.json', index=es_index.genres, es_client=es_client)
+    es_orm = ElasticORM(path_file=test_data.genres, index=es_index.genres, es_client=es_client)
     await es_orm.load_data()
     yield
     await es_orm.delete_data()
+
+
+@pytest.fixture
+def expected_persons():
+    with open(test_data.persons, 'r') as file:
+        return [Person.parse_obj(item).dict() for item in json.load(file)]
+
+
+@pytest.fixture
+def expected_films():
+    with open(test_data.films, 'r') as file:
+        return [FilmList.parse_obj(item).dict() for item in json.load(file)]
+
+
+@pytest.fixture
+def expected_genres():
+    with open(test_data.genres, 'r') as file:
+        return [Genre.parse_obj(item).dict() for item in json.load(file)]
