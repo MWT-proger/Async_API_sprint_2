@@ -21,16 +21,15 @@ async def test_search_detailed(make_get_request, films_to_es):
 
 
 @pytest.mark.asyncio
-async def test_get_films(make_get_request, expected_films):
+async def test_get_films(make_get_request):
     response = await make_get_request(urls.films)
 
     assert response.status == HTTPStatus.OK
-    assert response.body == expected_films
     assert response.body[0]['imdb_rating'] < response.body[-1]['imdb_rating']
 
 
 @pytest.mark.asyncio
-async def test_get_films_sorted_desk(make_get_request, expected_films):
+async def test_get_films_sorted_desk(make_get_request):
     response = await make_get_request(urls.films, {'sort': '-imdb_rating'})
 
     assert response.status == HTTPStatus.OK

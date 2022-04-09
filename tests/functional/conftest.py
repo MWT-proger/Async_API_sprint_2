@@ -8,9 +8,6 @@ import aioredis
 import pytest
 from elasticsearch import AsyncElasticsearch
 from functional.config import ElasticIndex, TestFilesPath
-from functional.models.film import FilmList
-from functional.models.genre import Genre
-from functional.models.person import Person
 from functional.settings import TestSettings
 from functional.utils.transform import raw_data_to_es
 from multidict import CIMultiDictProxy
@@ -38,6 +35,7 @@ async def es_client():
 async def redis_client():
     client = await aioredis.create_redis_pool((settings.redis_host, settings.redis_port), minsize=10, maxsize=20)
     yield client
+    redis_client.flushall()
     await client.close()
 
 
@@ -116,21 +114,3 @@ async def genres_to_es(es_client):
     await es_orm.load_data()
     yield
     await es_orm.delete_data()
-
-
-@pytest.fixture
-def expected_persons():
-    with open(test_data.persons, 'r') as file:
-        return [Person.parse_obj(item).dict() for item in json.load(file)]
-
-
-@pytest.fixture
-def expected_films():
-    with open(test_data.films, 'r') as file:
-        return [FilmList.parse_obj(item).dict() for item in json.load(file)]
-
-
-@pytest.fixture
-def expected_genres():
-    with open(test_data.genres, 'r') as file:
-        return [Genre.parse_obj(item).dict() for item in json.load(file)]

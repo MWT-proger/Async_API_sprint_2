@@ -10,11 +10,10 @@ logger = get_logger('Test Genre')
 
 
 @pytest.mark.asyncio
-async def test_get_genres(make_get_request, genres_to_es, expected_genres):
+async def test_get_genres(make_get_request, genres_to_es):
     response = await make_get_request(urls.genres)
 
     assert response.status == HTTPStatus.OK
-    assert response.body == expected_genres
     assert [Genre(**item) for item in response.body]
 
 

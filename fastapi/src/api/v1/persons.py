@@ -29,7 +29,7 @@ async def persons_search(
     persons = await person_service.get_specific_data(
         query_search=query,
         page_size=page_size,
-        page_number=page_size * page_number - page_size,
+        page_number=page_number,
     )
     if not persons:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.PERSONS_NOT_FOUND)

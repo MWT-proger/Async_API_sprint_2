@@ -31,6 +31,6 @@ class ElasticService(ElasticBase):
             body=body,
             index=index,
             size=size,
-            from_=number
+            from_=size * number - size if number else None
         )
         return [item['_source'] for item in data['hits']['hits']]
