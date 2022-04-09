@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 import pytest
 from functional.config import TestUrls
-from functional.models.film import FilmList, Film
+from functional.models.film import Film, FilmList
 from functional.utils.app_logger import get_logger
 
 urls = TestUrls()

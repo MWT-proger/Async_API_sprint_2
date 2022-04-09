@@ -37,6 +37,7 @@ class PersonService(BaseService):
                                 page_number: int = 1,
                                 ) -> Optional[List[Person]]:
         """Поиск персон по параметрам"""
+        print('page', page_number)
         self.key = 'query_search: %s, page_size:%s, page_number:%s' \
                    % (query_search, page_size, page_number)
         persons = await self.redis.get(PERSON_INDEX_ELASTIC, key=self.key)

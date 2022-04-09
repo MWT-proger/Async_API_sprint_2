@@ -18,13 +18,13 @@ async def test_get_persons(make_get_request, persons_to_es, expected_persons):
     assert [Person(**item) for item in response.body]
 
 
-# @pytest.mark.asyncio
-# async def test_get_persons_page_size(make_get_request, persons_to_es, expected_persons):
-#     response = await make_get_request(urls.search_persons, {'page[size]': 2, 'page[number]': 3})
-#
-#     assert response.status == HTTPStatus.OK
-#     assert [Person(**item) for item in response.body]
-#     assert len(response.body) == 1
+@pytest.mark.asyncio
+async def test_get_persons_page_size(make_get_request, persons_to_es, expected_persons):
+    response = await make_get_request(urls.search_persons, {'page[size]': 2, 'page[number]': 3})
+
+    assert response.status == HTTPStatus.OK
+    assert [Person(**item) for item in response.body]
+    assert len(response.body) == 1
 
 
 @pytest.mark.asyncio
