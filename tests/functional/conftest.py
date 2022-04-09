@@ -1,20 +1,19 @@
 import asyncio
+import json
+from dataclasses import dataclass
+from typing import Optional
+
 import aiohttp
 import aioredis
 import pytest
-import json
-
-from dataclasses import dataclass
-from typing import Optional
 from elasticsearch import AsyncElasticsearch
-from multidict import CIMultiDictProxy
-
 from functional.config import ElasticIndex, TestFilesPath
-from functional.settings import TestSettings
-from functional.utils.transform import raw_data_to_es
-from functional.models.person import Person
 from functional.models.film import FilmList
 from functional.models.genre import Genre
+from functional.models.person import Person
+from functional.settings import TestSettings
+from functional.utils.transform import raw_data_to_es
+from multidict import CIMultiDictProxy
 
 settings = TestSettings()
 es_index = ElasticIndex()

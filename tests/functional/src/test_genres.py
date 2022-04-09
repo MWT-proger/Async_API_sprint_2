@@ -1,6 +1,6 @@
-import pytest
 from http import HTTPStatus
 
+import pytest
 from functional.config import TestUrls
 from functional.models.genre import Genre
 from functional.utils.app_logger import get_logger
@@ -12,7 +12,6 @@ logger = get_logger('Test Genre')
 @pytest.mark.asyncio
 async def test_get_genres(make_get_request, genres_to_es, expected_genres):
     response = await make_get_request(urls.genres)
-
 
     assert response.status == HTTPStatus.OK
     assert response.body == expected_genres

@@ -1,10 +1,8 @@
 from time import sleep
 
 from elasticsearch import Elasticsearch
-
 from settings import TestSettings
 from utils.app_logger import get_logger
-
 
 settings = TestSettings()
 logger = get_logger('Elasticsearch connection')

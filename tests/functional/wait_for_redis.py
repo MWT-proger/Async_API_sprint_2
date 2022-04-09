@@ -1,10 +1,8 @@
 from time import sleep
 
 from redis import ConnectionError, Redis
-
 from settings import TestSettings
 from utils.app_logger import get_logger
-
 
 settings = TestSettings()
 logger = get_logger('Redis connection')

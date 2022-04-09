@@ -1,6 +1,6 @@
-import pytest
 from http import HTTPStatus
 
+import pytest
 from functional.config import TestUrls
 from functional.models.film import FilmList
 from functional.utils.app_logger import get_logger
