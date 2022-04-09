@@ -19,7 +19,7 @@ async def test_get_genres(make_get_request, genres_to_es, expected_genres):
 
 
 @pytest.mark.asyncio
-async def test_get_genre(make_get_request, genres_to_es):
+async def test_get_genre_ok(make_get_request, genres_to_es):
     response = await make_get_request(urls.genres + "56b541ab-4d66-4021-8708-397762bff2d4")
 
     assert response.status == HTTPStatus.OK
@@ -27,3 +27,11 @@ async def test_get_genre(make_get_request, genres_to_es):
         "id": "56b541ab-4d66-4021-8708-397762bff2d4",
         "name": "Music"
     }
+
+
+@pytest.mark.asyncio
+async def test_get_genre_not_found(make_get_request, genres_to_es):
+    response = await make_get_request(urls.genres + "63c24835-34d3-4279-8d81-3c5f4ddb0cdc4")
+
+    assert response.status == HTTPStatus.NOT_FOUND
+    assert response.body['detail'] == "genre not found"
