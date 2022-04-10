@@ -1,6 +1,5 @@
+import asyncio
 from http import HTTPStatus
-
-# from icecream import ic
 
 import pytest
 from functional.config import TestUrls
@@ -47,7 +46,7 @@ async def test_get_person_not_found(make_get_request, persons_to_es):
 
 @pytest.mark.asyncio
 async def test_search_persons_ok(make_get_request, persons_to_es):
-    response = await make_get_request(urls.search_persons, {'query': 'Luc'})
+    response = await make_get_request(urls.search_persons, {'query': 'Lucas'})
 
     assert response.status == HTTPStatus.OK
     assert [Person(**item) for item in response.body]

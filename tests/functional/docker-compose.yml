@@ -10,5 +10,30 @@ services:
       && python3 /tests/functional/wait_for_es.py
       && python3 /tests/functional/wait_for_redis.py
       && pytest /tests/functional/src"
-    extra_hosts:
-        - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    depends_on:
+      - fastapi
+  redis_test:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+  elasticsearch_test:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms200m -Xmx200m
+    ports:
+      - "9200:9200"
+  fastapi:
+    build: ../../fastapi
+    volumes:
+      - ../../fastapi/:/usr/src/fastapi/
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    depends_on:
+      - redis_test
+      - elasticsearch_test

@@ -1,3 +1,4 @@
+import asyncio
 from http import HTTPStatus
 
 import pytest
@@ -36,23 +37,23 @@ async def test_get_films_sorted_desk(make_get_request):
     assert response.body[0]['imdb_rating'] > response.body[-1]['imdb_rating']
 
 
-@pytest.mark.asyncio
-async def test_get_films_filter_by_genre_ok(make_get_request):
-    response = await make_get_request(urls.films, {'filter[genre]': '9c91a5b2-eb70-4889-8581-ebe427370edd',
-                                                   'page[size]': 2, 'page[number]': 2})
-
-    assert response.status == HTTPStatus.OK
-    assert [FilmList(**film) for film in response.body]
-    assert len(response.body) == 1
-    assert response.body[0]['title'] == 'Amateur Porn Star Killer 3: The Final Chapter'
-
-
-@pytest.mark.asyncio
-async def test_get_films_filter_by_genre_not_found(make_get_request):
-    response = await make_get_request(urls.films, {'filter[genre]': '237fd1e4-c98e-454e-aa13-8a13fb7547b5'})
-
-    assert response.status == HTTPStatus.NOT_FOUND
-    assert response.body['detail'] == "films not found"
+# @pytest.mark.asyncio
+# async def test_get_films_filter_by_genre_ok(make_get_request):
+#     response = await make_get_request(urls.films, {'filter[genre]': '9c91a5b2-eb70-4889-8581-ebe427370edd',
+#                                                    'page[size]': 2, 'page[number]': 2})
+#
+#     assert response.status == HTTPStatus.OK
+#     assert [FilmList(**film) for film in response.body]
+#     assert len(response.body) == 1
+#     assert response.body[0]['title'] == 'Amateur Porn Star Killer 3: The Final Chapter'
+#
+#
+# @pytest.mark.asyncio
+# async def test_get_films_filter_by_genre_not_found(make_get_request):
+#     response = await make_get_request(urls.films, {'filter[genre]': '237fd1e4-c98e-454e-aa13-8a13fb7547b5'})
+#
+#     assert response.status == HTTPStatus.NOT_FOUND
+#     assert response.body['detail'] == "films not found"
 
 
 @pytest.mark.asyncio
