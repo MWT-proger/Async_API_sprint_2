@@ -10,7 +10,7 @@ logger = get_logger('Test Film')
 
 
 @pytest.mark.asyncio
-async def test_search_detailed(make_get_request, films_to_es):
+async def test_search_detailed(make_get_request, films_to_es, event_loop, redis_client):
     response = await make_get_request(urls.search_films, {'query': 'Star Was Born', 'page[size]': 7, })
 
     assert response.status == HTTPStatus.OK
