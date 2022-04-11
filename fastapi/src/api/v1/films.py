@@ -23,15 +23,7 @@ async def film_details(film_id: str, film_service: FilmService = Depends(get_fil
     if not film:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.FILM_NOT_FOUND)
 
-    return FilmDetail(
-        id=film.id,
-        title=film.title,
-        imdb_rating=film.imdb_rating,
-        description=film.description,
-        genre=film.genre,
-        actors=film.actors,
-        writers=film.writers,
-        directors=film.director)
+    return FilmDetail.parse_obj(film)
 
 
 @router.get('/', response_model=List[FilmList],
@@ -53,7 +45,7 @@ async def film_list(sort: Optional[str] = Query(None, alias="sort"),
     )
     if not films:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.FILMS_NOT_FOUND)
-    return films
+    return [FilmList.parse_obj(film) for film in films]
 
 
 @router.get('/search/', response_model=List[FilmList],
@@ -74,4 +66,4 @@ async def film_list_search(query: Optional[str] = Query(None, alias="query"),
     )
     if not films:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=constant.FILMS_NOT_FOUND)
-    return films
+    return [FilmList.parse_obj(film) for film in films]

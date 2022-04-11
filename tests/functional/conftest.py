@@ -6,6 +6,7 @@ from typing import Optional
 import aiohttp
 import aioredis
 import pytest
+from functional.models.new_base_model import NewBaseModel
 from elasticsearch import AsyncElasticsearch
 from functional.config import ElasticIndex, TestFilesPath
 from functional.settings import TestSettings
@@ -36,10 +37,25 @@ async def es_client():
     await client.close()
 
 
+class RedisService:
+    def __init__(self, redis: aioredis.Redis):
+        self.redis = redis
+
+    async def get(self, index, key=None, model=NewBaseModel):
+        data = await self.redis.get(f'{index}: {key}' if key else index)
+        if not data:
+            return None
+        if isinstance(data := json.loads(data), list):
+            data = [json.loads(item) for item in data]
+            return [model(**film) for film in data]
+        else:
+            return model.parse_obj(data)
+
+
 @pytest.fixture(scope='session')
 async def redis_client():
     client = await aioredis.create_redis_pool((settings.redis_host, settings.redis_port), minsize=10, maxsize=20)
-    yield client
+    yield RedisService(client)
     await client.flushdb()
     client.close()
 
