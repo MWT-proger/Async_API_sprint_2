@@ -15,7 +15,7 @@ PERSON_CACHE_EXPIRE_IN_SECONDS = 60 * 5
 
 
 class PersonService(BaseService):
-    def __init__(self, redis: RedisBase, elasticsearch: RedisBase):
+    def __init__(self, redis: RedisBase, elasticsearch: AsyncElasticsearch):
         self.redis = redis
         self.elasticsearch = elasticsearch
         self.key = None

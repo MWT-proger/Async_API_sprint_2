@@ -11,18 +11,18 @@ logger = get_logger('Test Film')
 
 
 async def get_key(query_search: str = None,
-                            sort: str = None,
-                            filter_genre: str = None,
-                            page_size: int = 50,
-                            page_number: int = 1,
-                            ):
+                  sort: str = None,
+                  filter_genre: str = None,
+                  page_size: int = 50,
+                  page_number: int = 1,
+                  ):
     key = 'query_search: %s, sort:%s, filter_genre:%s, page_size:%s, page_number:%s' \
-               % (query_search, sort, filter_genre, page_size, page_number)
+          % (query_search, sort, filter_genre, page_size, page_number)
     return key
 
 
 @pytest.mark.asyncio
-async def test_search_detailed(make_get_request, films_to_es, event_loop, redis_client):
+async def test_search_detailed(make_get_request, films_to_es, redis_client):
     response = await make_get_request(urls.search_films, {'query': 'Star Was Born', 'page[size]': 7, })
     key = await get_key(query_search='Star Was Born', page_size=7)
     redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmList)
