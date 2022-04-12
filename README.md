@@ -128,4 +128,4 @@ docker-compose -f docker-compose.yml exec movies python manage.py createsuperuse
 ```
 
 --------------------
-**ссылка для ревью на GitHub**  [https://github.com/MWT-proger/Async_API_sprint_1](https://github.com/MWT-proger/Async_API_sprint_1)
+**ссылка для ревью на GitHub**  [https://github.com/MWT-proger/Async_API_sprint_2](https://github.com/MWT-proger/Async_API_sprint_2)
