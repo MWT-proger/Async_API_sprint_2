@@ -17,15 +17,11 @@ git clone https://github.com/MWT-proger/Async_API_sprint_1.git
 ```
 make full_upload
 ```
-**Либо запустить проект в ручную**
+**Либо запустить проект вручную**
 
 для начала загрузить образы и развернуть контейнеры
 ```
 docker-compose up -d --build
-docker-compose -f docker-compose.yml exec movies python manage.py migrate movies --fake
-docker-compose -f docker-compose.yml exec movies python manage.py migrate
-docker-compose -f docker-compose.yml exec movies python manage.py collectstatic --noinput
-docker-compose -f docker-compose.yml exec movies python load_data.py
 ```
 
 произвести миграции для Админ панели
@@ -42,7 +38,42 @@ docker-compose -f docker-compose.yml exec movies python manage.py collectstatic 
 docker-compose -f docker-compose.yml exec movies python load_data.py
 ```
 Всё! Можно пользоваться))
+## Тестирование проекта
+**Для тестирования проекта необходимо развернуть отдельный docker-compose** 
 
+**Если установлена утилита для запуска Makefile**
+
+ использовать  команду ниже для запуска проекта разработки 
+```
+make dev_full_upload
+```
+
+ и команду для запуска самих тестов 
+```
+make api_tests
+```
+**Либо запустить проект разработки вручную**
+
+для начала загрузить образы и развернуть контейнеры
+```
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+и запустить сами тесты
+```
+docker-compose -f tests/functional/docker-compose.yml up
+```
+
+
+**Также в обоих случаях можно запускать тесты через команду**
+```
+pytest
+```
+
+при условиях:
+
+1. Запущен проект для разработки
+2. установлены все зависимости из tests/functional/requirements.txt
 
 ## Краткое руководство использования
 
@@ -97,4 +128,4 @@ docker-compose -f docker-compose.yml exec movies python manage.py createsuperuse
 ```
 
 --------------------
-**ссылка для ревью на GitHub**  [https://github.com/MWT-proger/Async_API_sprint_1](https://github.com/MWT-proger/Async_API_sprint_1)
+**ссылка для ревью на GitHub**  [https://github.com/MWT-proger/Async_API_sprint_2](https://github.com/MWT-proger/Async_API_sprint_2)
