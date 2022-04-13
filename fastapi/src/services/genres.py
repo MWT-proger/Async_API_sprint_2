@@ -1,5 +1,4 @@
 from functools import lru_cache
-from typing import List, Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
@@ -7,7 +6,6 @@ from db.redis import RedisBase, RedisService, get_redis
 from elasticsearch import AsyncElasticsearch
 from models.genre import GENRES_INDEX_ELASTIC, GENRES_LIST_SIZE, Genre
 from services.base import BaseService
-from tools.cacheable import cacheable
 
 from fastapi import Depends
 
@@ -15,29 +13,22 @@ GENRE_CACHE_EXPIRE_IN_SECONDS = 60 * 5
 
 
 class GenreService(BaseService):
-    def __init__(self, redis: RedisBase, elasticsearch: ElasticBase):
-        self.redis = redis
-        self.elasticsearch = elasticsearch
+    index = GENRES_INDEX_ELASTIC
+    model = Genre
 
-    @cacheable(prefix=GENRES_INDEX_ELASTIC, cache_expire=GENRE_CACHE_EXPIRE_IN_SECONDS)
-    async def get_by_id(self, genre_id: str) -> Optional[Genre]:
-        """Получает жанр по id"""
-        genre = await self.redis.get(GENRES_INDEX_ELASTIC, key=genre_id)
-        if not genre:
-            genre = await self.elasticsearch.get_by_id(GENRES_INDEX_ELASTIC, key=genre_id)
-            if not genre:
-                return None
-        return Genre.parse_obj(genre)
+    def _get_search_request(self,
+                            query_search=None,
+                            sort=None,
+                            filter_genre=None):
+        return None
 
-    @cacheable(prefix=GENRES_INDEX_ELASTIC, cache_expire=GENRE_CACHE_EXPIRE_IN_SECONDS)
-    async def get_specific_data(self) -> Optional[List[Genre]]:
-        """Получает список жанров"""
-        genres = await self.redis.get(GENRES_INDEX_ELASTIC, Genre)
-        if not genres:
-            genres = await self.elasticsearch.search_data(index=GENRES_INDEX_ELASTIC)
-            if not genres:
-                return None
-        return [Genre.parse_obj(genre) for genre in genres]
+    def _get_key(self,
+                 query_search=None,
+                 sort=None,
+                 filter_genre=None,
+                 page_size=None,
+                 page_number=None):
+        return None
 
 
 @lru_cache()
