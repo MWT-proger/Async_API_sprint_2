@@ -5,7 +5,7 @@ from functional.models.new_base_model import NewBaseModel as BaseModel
 OBJ_KEY = str
 OBJ_VALUE = Optional[Union[float, str]]
 
-PERSON_INDEX_ELASTIC = 'persons'
+PERSON_INDEX_ELASTIC = "persons"
 
 
 class Person(BaseModel):

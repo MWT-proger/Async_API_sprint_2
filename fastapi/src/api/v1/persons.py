@@ -19,15 +19,15 @@ class Person(BaseModel):
     films: List[Dict[OBJ_KEY, OBJ_VALUE]] = None
 
 
-@router.get('/search', response_model=List[Person],
+@router.get("/search", response_model=List[Person],
             summary="Поиск персон",
             description="Полнотекстовый поиск персон",
             response_description="Полное имя и список фильмов персоны",
-            tags=['Полнотекстовый поиск персон'])
+            tags=["Полнотекстовый поиск персон"])
 async def persons_search(
         query: Optional[str] = Query(None),
-        page_number: int = Query(1, alias='page[number]', title=constant.TITLE_PAGE_NUMBER),
-        page_size: int = Query(20, alias='page[size]', title=constant.TITLE_PAGE_SIZE),
+        page_number: int = Query(1, alias="page[number]", title=constant.TITLE_PAGE_NUMBER),
+        page_size: int = Query(20, alias="page[size]", title=constant.TITLE_PAGE_SIZE),
         person_service: PersonService = Depends(get_person_service)
 ) -> List[Person]:
     persons = await person_service.get_specific_data(
@@ -40,11 +40,11 @@ async def persons_search(
     return [Person.parse_obj(person) for person in persons]
 
 
-@router.get('/{person_id}', response_model=Person,
+@router.get("/{person_id}", response_model=Person,
             summary="Поиск персоны по id",
             description="Поиск персоны по id",
             response_description="Полное имя и список фильмов персоны",
-            tags=['Персона'])
+            tags=["Персона"])
 async def person_detail(person_id: str, person_service: PersonService = Depends(get_person_service)) -> Person:
     person = await person_service.get_by_id(person_id)
     if not person:

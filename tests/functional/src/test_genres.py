@@ -2,11 +2,11 @@ from http import HTTPStatus
 
 import pytest
 from functional.config import TestUrls
-from functional.models.genre import Genre, GENRES_INDEX_ELASTIC
+from functional.models.genre import GENRES_INDEX_ELASTIC, Genre
 from functional.utils.app_logger import get_logger
 
 urls = TestUrls()
-logger = get_logger('Test Genre')
+logger = get_logger("Test Genre")
 
 
 @pytest.mark.asyncio

@@ -15,7 +15,7 @@ PERSON_CACHE_EXPIRE_IN_SECONDS = 60 * 5
 
 
 class PersonService(BaseService):
-    def __init__(self, redis: RedisBase, elasticsearch: AsyncElasticsearch):
+    def __init__(self, redis: RedisBase, elasticsearch: ElasticBase):
         self.redis = redis
         self.elasticsearch = elasticsearch
         self.key = None
@@ -37,8 +37,7 @@ class PersonService(BaseService):
                                 page_number: int = 1,
                                 ) -> Optional[List[Person]]:
         """Поиск персон по параметрам"""
-        print('page', page_number)
-        self.key = 'query_search: %s, page_size:%s, page_number:%s' \
+        self.key = "query_search: %s, page_size:%s, page_number:%s" \
                    % (query_search, page_size, page_number)
         persons = await self.redis.get(PERSON_INDEX_ELASTIC, key=self.key)
         if not persons:
@@ -54,7 +53,7 @@ class PersonService(BaseService):
         return [Person.parse_obj(person) for person in persons]
 
     async def _get_search_request(self, query) -> dict:
-        return {'query': {'multi_match': {'query': query, "fuzziness": "auto", 'fields': ['full_name']}}} \
+        return {"query": {"multi_match": {"query": query, "fuzziness": "auto", "fields": ["full_name"]}}} \
             if query else None
 
 

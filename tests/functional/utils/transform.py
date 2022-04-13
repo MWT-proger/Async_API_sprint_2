@@ -8,9 +8,9 @@ def raw_data_to_es(raw_data: list, index: str) -> list:
             [
                 json.dumps(
                     {
-                        'index': {
-                            '_index': index,
-                            '_id': row['id']
+                        "index": {
+                            "_index": index,
+                            "_id": row["id"]
                         }
                     }
                 ),

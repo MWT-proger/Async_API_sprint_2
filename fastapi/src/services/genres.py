@@ -37,7 +37,6 @@ class GenreService(BaseService):
             genres = await self.elasticsearch.search_data(index=GENRES_INDEX_ELASTIC)
             if not genres:
                 return None
-        print(genres)
         return [Genre.parse_obj(genre) for genre in genres]
 
 

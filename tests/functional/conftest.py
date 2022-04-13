@@ -6,9 +6,9 @@ from typing import Optional
 import aiohttp
 import aioredis
 import pytest
-from functional.models.new_base_model import NewBaseModel
 from elasticsearch import AsyncElasticsearch
 from functional.config import ElasticIndex, TestFilesPath
+from functional.models.new_base_model import NewBaseModel
 from functional.settings import TestSettings
 from functional.utils.transform import raw_data_to_es
 from multidict import CIMultiDictProxy
@@ -30,9 +30,9 @@ def event_loop():
     return asyncio.get_event_loop()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def es_client():
-    client = AsyncElasticsearch(hosts='{host}:{port}'.format(host=settings.es_host, port=settings.es_port))
+    client = AsyncElasticsearch(hosts="{host}:{port}".format(host=settings.es_host, port=settings.es_port))
     yield client
     await client.close()
 

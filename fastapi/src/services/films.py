@@ -29,7 +29,7 @@ class FilmService(BaseService):
                                 page_size: int = 50,
                                 page_number: int = 1,
                                 ):
-        self.key = 'query_search: %s, sort:%s, filter_genre:%s, page_size:%s, page_number:%s' \
+        self.key = "query_search: %s, sort:%s, filter_genre:%s, page_size:%s, page_number:%s" \
                    % (query_search, sort, filter_genre, page_size, page_number)
 
         films = await self.redis.get(MOVIES_INDEX_ELASTIC, key=self.key)
