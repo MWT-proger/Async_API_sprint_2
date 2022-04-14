@@ -4,8 +4,6 @@ from typing import Optional
 from db.interfaces import ElasticBase, RedisBase
 from tools.cacheable import cacheable
 
-CACHE_EXPIRE_IN_SECONDS = 60 * 5
-
 
 class BaseService(ABC):
     def __init__(self, redis: RedisBase, elasticsearch: ElasticBase):

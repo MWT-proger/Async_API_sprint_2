@@ -10,9 +10,6 @@ from services.base import BaseService
 
 from fastapi import Depends
 
-FILM_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 минут
-FILMS_LIST_SIZE = 100
-
 
 class FilmService(BaseService):
     index = MOVIES_INDEX_ELASTIC

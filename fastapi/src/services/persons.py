@@ -10,8 +10,6 @@ from services.base import BaseService
 
 from fastapi import Depends
 
-PERSON_CACHE_EXPIRE_IN_SECONDS = 60 * 5
-
 
 class PersonService(BaseService):
     index = PERSON_INDEX_ELASTIC
