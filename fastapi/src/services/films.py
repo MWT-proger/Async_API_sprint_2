@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
@@ -17,17 +18,12 @@ class FilmService(BaseService):
     index = MOVIES_INDEX_ELASTIC
     model = Film
 
-    def _get_key(self,
-                 query_search: str = None,
-                 sort: str = None,
-                 filter_genre: str = None,
-                 page_size: int = 50,
-                 page_number: int = 1,):
+    def _get_key(self, query_search, sort, filter_genre, page_size, page_number) -> Optional[str]:
         return "query_search: %s, sort:%s, filter_genre:%s, page_size:%s, page_number:%s" \
                % (query_search, sort, filter_genre, page_size, page_number)
 
     def _get_search_request(self, query_search: str = None, sort: str = None,
-                            filter_genre: str = None) -> dict:
+                            filter_genre: str = None) -> Optional[dict]:
         if query_search:
             body = {
                 "query": {

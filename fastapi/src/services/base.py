@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from db.interfaces import ElasticBase, RedisBase
 from tools.cacheable import cacheable
@@ -23,11 +24,11 @@ class BaseService(ABC):
         pass
 
     @abstractmethod
-    def _get_search_request(self, **kwargs):
+    def _get_search_request(self, **kwargs) -> Optional[dict]:
         pass
 
     @abstractmethod
-    def _get_key(self, **kwargs):
+    def _get_key(self, **kwargs) -> Optional[str]:
         pass
 
     @cacheable()

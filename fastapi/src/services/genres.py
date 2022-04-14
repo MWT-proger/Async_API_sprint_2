@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
@@ -16,10 +17,10 @@ class GenreService(BaseService):
     index = GENRES_INDEX_ELASTIC
     model = Genre
 
-    def _get_search_request(self, **kwargs):
+    def _get_search_request(self, **kwargs) -> Optional[dict]:
         return None
 
-    def _get_key(self, **kwargs):
+    def _get_key(self, **kwargs) -> Optional[str]:
         return None
 
 
