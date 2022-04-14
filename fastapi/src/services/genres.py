@@ -16,18 +16,10 @@ class GenreService(BaseService):
     index = GENRES_INDEX_ELASTIC
     model = Genre
 
-    def _get_search_request(self,
-                            query_search=None,
-                            sort=None,
-                            filter_genre=None):
+    def _get_search_request(self, **kwargs):
         return None
 
-    def _get_key(self,
-                 query_search=None,
-                 sort=None,
-                 filter_genre=None,
-                 page_size=None,
-                 page_number=None):
+    def _get_key(self, **kwargs):
         return None
 
 

@@ -23,19 +23,11 @@ class BaseService(ABC):
         pass
 
     @abstractmethod
-    def _get_search_request(self,
-                            query_search=None,
-                            sort=None,
-                            filter_genre=None):
+    def _get_search_request(self, **kwargs):
         pass
 
     @abstractmethod
-    def _get_key(self,
-                 query_search=None,
-                 sort=None,
-                 filter_genre=None,
-                 page_size=50,
-                 page_number=1):
+    def _get_key(self, **kwargs):
         pass
 
     @cacheable()

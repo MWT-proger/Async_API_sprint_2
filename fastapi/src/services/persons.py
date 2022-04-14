@@ -18,17 +18,15 @@ class PersonService(BaseService):
 
     def _get_search_request(self,
                             query_search=None,
-                            sort=None,
-                            filter_genre=None):
+                            **kwargs):
         return {"query": {"multi_match": {"query": query_search, "fuzziness": "auto", "fields": ["full_name"]}}} \
             if query_search else None
 
     def _get_key(self,
                  query_search=None,
-                 sort=None,
-                 filter_genre=None,
                  page_size=50,
-                 page_number=1):
+                 page_number=1,
+                 **kwargs):
         return "query_search: %s, page_size:%s, page_number:%s" \
                % (query_search, page_size, page_number)
 
