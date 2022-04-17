@@ -6,12 +6,12 @@ from db.elastic import ElasticBase, ElasticService, get_elastic
 from db.redis import RedisBase, RedisService, get_redis
 from elasticsearch import AsyncElasticsearch
 from models.genre import GENRES_INDEX_ELASTIC, GENRES_LIST_SIZE, Genre
-from services.base import BaseService
+from services.base import ListView, DetailView
 
 from fastapi import Depends
 
 
-class GenreService(BaseService):
+class GenreService(ListView, DetailView):
     index = GENRES_INDEX_ELASTIC
     model = Genre
 

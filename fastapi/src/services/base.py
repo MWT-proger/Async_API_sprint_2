@@ -5,7 +5,7 @@ from db.interfaces import ElasticBase, RedisBase
 from tools.cacheable import cacheable
 
 
-class BaseService(ABC):
+class BaseView(ABC):
     def __init__(self, redis: RedisBase, elasticsearch: ElasticBase):
         self.redis = redis
         self.elasticsearch = elasticsearch
@@ -21,23 +21,15 @@ class BaseService(ABC):
     def model(self):
         pass
 
-    @abstractmethod
-    def _get_search_request(self, **kwargs) -> Optional[dict]:
-        pass
 
+class ListView(BaseView, ABC):
     @abstractmethod
     def _get_key(self, **kwargs) -> Optional[str]:
         pass
 
-    @cacheable()
-    async def get_by_id(self, id: str):
-        item = await self.redis.get(self.index, key=id)
-
-        if not item:
-            item = await self.elasticsearch.get_by_id(self.index, key=id)
-            if not item:
-                return None
-        return self.model.parse_obj(item)
+    @abstractmethod
+    def _get_search_request(self, **kwargs) -> Optional[dict]:
+        pass
 
     @cacheable()
     async def get_specific_data(self,
@@ -68,3 +60,15 @@ class BaseService(ABC):
             if not items:
                 return None
         return [self.model.parse_obj(item) for item in items]
+
+
+class DetailView(BaseView, ABC):
+    @cacheable()
+    async def get_by_id(self, id: str):
+        item = await self.redis.get(self.index, key=id)
+
+        if not item:
+            item = await self.elasticsearch.get_by_id(self.index, key=id)
+            if not item:
+                return None
+        return self.model.parse_obj(item)

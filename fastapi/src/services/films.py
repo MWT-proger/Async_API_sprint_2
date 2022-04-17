@@ -6,12 +6,12 @@ from db.elastic import ElasticBase, ElasticService, get_elastic
 from db.redis import RedisBase, RedisService, get_redis
 from elasticsearch import AsyncElasticsearch
 from models.film import MOVIES_INDEX_ELASTIC, Film
-from services.base import BaseService
+from services.base import ListView, DetailView
 
 from fastapi import Depends
 
 
-class FilmService(BaseService):
+class FilmService(ListView, DetailView):
     index = MOVIES_INDEX_ELASTIC
     model = Film
 

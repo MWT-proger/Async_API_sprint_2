@@ -6,12 +6,12 @@ from db.elastic import ElasticBase, ElasticService, get_elastic
 from db.redis import RedisBase, RedisService, get_redis
 from elasticsearch import AsyncElasticsearch
 from models.person import PERSON_INDEX_ELASTIC, Person
-from services.base import BaseService
+from services.base import ListView, DetailView
 
 from fastapi import Depends
 
 
-class PersonService(BaseService):
+class PersonService(ListView, DetailView):
     index = PERSON_INDEX_ELASTIC
     model = Person
 
