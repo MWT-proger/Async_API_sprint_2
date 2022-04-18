@@ -37,12 +37,12 @@ async def es_client():
     await client.close()
 
 
-class RedisService:
-    def __init__(self, redis: aioredis.Redis):
-        self.redis = redis
+class CacheService:
+    def __init__(self, cache: aioredis.Redis):
+        self.cache = cache
 
     async def get(self, index, key=None, model=NewBaseModel):
-        data = await self.redis.get(f'{index}: {key}' if key else index)
+        data = await self.cache.get(f"{index}: {key}" if key else index)
         if not data:
             return None
         if isinstance(data := json.loads(data), list):
@@ -52,15 +52,15 @@ class RedisService:
             return model.parse_obj(data)
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def redis_client():
     client = await aioredis.create_redis_pool((settings.redis_host, settings.redis_port), minsize=10, maxsize=20)
-    yield RedisService(client)
+    yield CacheService(client)
     await client.flushdb()
     client.close()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def session():
     session = aiohttp.ClientSession()
     yield session
@@ -90,10 +90,10 @@ class ElasticORM:
         self.es_client = es_client
 
     async def load_data(self):
-        with open(self.path_file, 'r') as file:
+        with open(self.path_file, "r") as file:
             raw_data = json.load(file)
             data = raw_data_to_es(raw_data=raw_data, index=self.index)
-        await self.es_client.bulk(body='\n'.join(data) + '\n', index=self.index, refresh=True)
+        await self.es_client.bulk(body="\n".join(data) + "\n", index=self.index, refresh=True)
 
     async def delete_data(self):
         await self.es_client.delete_by_query(
@@ -106,7 +106,7 @@ class ElasticORM:
         )
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def films_to_es(es_client):
     es_orm = ElasticORM(path_file=test_data.films, index=es_index.films, es_client=es_client)
     await es_orm.load_data()
@@ -114,7 +114,7 @@ async def films_to_es(es_client):
     await es_orm.delete_data()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def persons_to_es(es_client):
     es_orm = ElasticORM(path_file=test_data.persons, index=es_index.persons, es_client=es_client)
     await es_orm.load_data()
@@ -122,9 +122,39 @@ async def persons_to_es(es_client):
     await es_orm.delete_data()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def genres_to_es(es_client):
     es_orm = ElasticORM(path_file=test_data.genres, index=es_index.genres, es_client=es_client)
     await es_orm.load_data()
     yield
     await es_orm.delete_data()
+
+@pytest.fixture()
+async def film_by_id_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.film_by_id, index=es_index.films, es_client=es_client)
+    await es_orm.load_data()
+
+@pytest.fixture()
+async def film_search_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.film_search, index=es_index.films, es_client=es_client)
+    await es_orm.load_data()
+
+@pytest.fixture()
+async def film_by_genre_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.film_by_genre, index=es_index.films, es_client=es_client)
+    await es_orm.load_data()
+
+@pytest.fixture()
+async def person_search_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.person_search, index=es_index.persons, es_client=es_client)
+    await es_orm.load_data()
+
+@pytest.fixture()
+async def person_by_id_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.person_by_id, index=es_index.persons, es_client=es_client)
+    await es_orm.load_data()
+
+@pytest.fixture()
+async def genre_by_id_to_es(es_client):
+    es_orm = ElasticORM(path_file=test_data.genre_by_id, index=es_index.genres, es_client=es_client)
+    await es_orm.load_data()

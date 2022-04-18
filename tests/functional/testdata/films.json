@@ -1,31 +1,4 @@
-[{
-  "id": "3f8873be-f6b1-4f3f-8a01-873924659851",
-  "imdb_rating": 1.0,
-  "genre": [
-    {
-      "id": "56b541ab-4d66-4021-8708-397762bff2d4",
-      "name": "Music"
-    },
-    {
-      "id": "6d141ad2-d407-4252-bda4-95590aaf062a",
-      "name": "Documentary"
-    }
-  ],
-  "title": "Justin Bieber: A Star Was Born",
-  "description": null,
-  "director": null,
-  "actors_names": [
-    "Justin Bieber"
-  ],
-  "writers_names": null,
-  "actors": [
-    {
-      "id": "a967bacf-35ca-42ef-9bfd-3d003a957125",
-      "name": "Justin Bieber"
-    }
-  ],
-  "writers": null
-},
+[
   {
     "id": "b9151ead-cf2f-4e14-aeb9-c4617f68848f",
     "imdb_rating": 1.5,

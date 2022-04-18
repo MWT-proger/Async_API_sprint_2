@@ -1,0 +1,29 @@
+[{
+  "id": "5f8873be-s6b1-4f4f-8a01-873924659862",
+  "imdb_rating": 5.5,
+  "genre": [
+    {
+      "id": "56b541ab-4d66-4021-8708-397762bff2d4",
+      "name": "Music"
+    },
+    {
+      "id": "6d141ad2-d407-4252-bda4-95590aaf062a",
+      "name": "Documentary"
+    }
+  ],
+  "title": "Justin Bieber: Some Film by Genre",
+  "description": null,
+  "director": null,
+  "actors_names": [
+    "Justin Bieber"
+  ],
+  "writers_names": null,
+  "actors": [
+    {
+      "id": "a967bacf-35ca-42ef-9bfd-3d003a957125",
+      "name": "Justin Bieber"
+    }
+  ],
+  "writers": null
+}
+  ]

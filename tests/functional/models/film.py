@@ -6,7 +6,7 @@ from functional.models.new_base_model import NewBaseModel as BaseModel
 OBJ_ID = Union[str, str, UUID]
 OBJ_NAME = Union[str, str, UUID]
 
-MOVIES_INDEX_ELASTIC = "movies"
+MOVIES_INDEX = "movies"
 
 
 class Film(BaseModel):

@@ -1,13 +1,14 @@
 from http import HTTPStatus
 
 import pytest
-from functional.config import TestUrls
-from functional.models.film import (MOVIES_INDEX_ELASTIC, Film, FilmDetail,
+from functional.config import TestUrls, TestFilesPath
+from functional.models.film import (MOVIES_INDEX, Film, FilmDetail,
                                     FilmList)
-from functional.utils.app_logger import get_logger
+from functional.utils import app_logger, get_data
 
 urls = TestUrls()
-logger = get_logger("Test Film")
+test_data = TestFilesPath()
+logger = app_logger.get_logger("Test Film")
 
 
 async def get_key(query_search: str = None,
@@ -22,28 +23,32 @@ async def get_key(query_search: str = None,
 
 
 @pytest.mark.asyncio
-async def test_search_detailed(make_get_request, films_to_es, redis_client):
-    response = await make_get_request(urls.search_films, {"query": "Star Was Born", "page[size]": 7, })
-    key = await get_key(query_search="Star Was Born", page_size=7)
-    redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmList)
+async def test_get_films(make_get_request, films_to_es, redis_client):
+    response = await make_get_request(urls.films)
+    key = await get_key()
+    redis_body = await redis_client.get(MOVIES_INDEX, key=key, model=FilmList)
 
     assert response.status == HTTPStatus.OK
-    assert [FilmList(**film) for film in response.body]
-    assert len(response.body) == 7
     assert response.body[0]["imdb_rating"] < response.body[-1]["imdb_rating"]
-    assert response.body[0]["id"] == "3f8873be-f6b1-4f3f-8a01-873924659851"
 
     assert response.body == redis_body
 
 
 @pytest.mark.asyncio
-async def test_get_films(make_get_request, redis_client):
-    response = await make_get_request(urls.films)
-    key = await get_key()
-    redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmList)
+async def test_search_detailed(make_get_request, redis_client, film_search_to_es):
+    page_size = 7
+    data_from_file = await get_data.from_file(test_data.film_search)
+    film_search = data_from_file[0]
+
+    response = await make_get_request(urls.search_films, {"query": film_search["title"], "page[size]": page_size, })
+
+    key = await get_key(query_search=film_search["title"], page_size=page_size)
+    redis_body = await redis_client.get(MOVIES_INDEX, key=key, model=FilmList)
 
     assert response.status == HTTPStatus.OK
-    assert response.body[0]["imdb_rating"] < response.body[-1]["imdb_rating"]
+    assert [FilmList(**film) for film in response.body]
+    assert len(response.body) <= page_size
+    assert response.body[0]["id"] == film_search["id"]
 
     assert response.body == redis_body
 
@@ -52,7 +57,7 @@ async def test_get_films(make_get_request, redis_client):
 async def test_get_films_sorted_desk(make_get_request, redis_client):
     response = await make_get_request(urls.films, {"sort": "-imdb_rating"})
     key = await get_key(sort="-imdb_rating")
-    redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmList)
+    redis_body = await redis_client.get(MOVIES_INDEX, key=key, model=FilmList)
 
     assert response.status == HTTPStatus.OK
     assert response.body[0]["imdb_rating"] > response.body[-1]["imdb_rating"]
@@ -61,44 +66,49 @@ async def test_get_films_sorted_desk(make_get_request, redis_client):
 
 
 @pytest.mark.asyncio
-async def test_get_films_filter_by_genre_ok(make_get_request, redis_client):
-    response = await make_get_request(urls.films, {"filter[genre]": "9c91a5b2-eb70-4889-8581-ebe427370edd",
-                                                   "page[size]": 2, "page[number]": 2})
-    key = await get_key(filter_genre="9c91a5b2-eb70-4889-8581-ebe427370edd", page_size=2, page_number=2)
-    redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmList)
+async def test_get_films_filter_by_genre_ok(make_get_request, redis_client, film_by_genre_to_es):
+    page_size = 2
+    data_from_file = await get_data.from_file(test_data.film_by_genre)
+    film_by_genre = data_from_file[0]
+
+    response = await make_get_request(urls.films, {"filter[genre]": film_by_genre["genre"][0]["id"],
+                                                   "page[size]": page_size})
+    key = await get_key(filter_genre=film_by_genre["genre"][0]["id"], page_size=page_size)
+    redis_body = await redis_client.get(MOVIES_INDEX, key=key, model=FilmList)
 
     assert response.status == HTTPStatus.OK
     assert [FilmList(**film) for film in response.body]
-    assert len(response.body) == 1
-    assert response.body[0]["title"] == "Amateur Porn Star Killer 3: The Final Chapter"
 
     assert response.body == redis_body
 
 
 @pytest.mark.asyncio
 async def test_get_films_filter_by_genre_not_found(make_get_request):
-    response = await make_get_request(urls.films, {"filter[genre]": "237fd1e4-c98e-454e-aa13-8a13fb7547b5"})
+    response = await make_get_request(urls.films, {"filter[genre]": "some_id_genre"})
 
     assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "films not found"
 
 
 @pytest.mark.asyncio
-async def test_get_film_by_id_ok(make_get_request, redis_client):
-    response = await make_get_request(urls.films + "b9151ead-cf2f-4e14-aeb9-c4617f68848f")
-    key = "b9151ead-cf2f-4e14-aeb9-c4617f68848f"
-    redis_body = await redis_client.get(MOVIES_INDEX_ELASTIC, key=key, model=FilmDetail)
+async def test_get_film_by_id_ok(make_get_request, redis_client, film_by_id_to_es):
+    data_from_file = await get_data.from_file(test_data.film_by_id)
+    film_by_id = data_from_file[0]
+
+    response = await make_get_request(urls.films + film_by_id["id"])
+    key = film_by_id["id"]
+    redis_body = await redis_client.get(MOVIES_INDEX, key=key, model=FilmDetail)
 
     assert response.status == HTTPStatus.OK
     assert FilmDetail(**response.body)
-    assert response.body["title"] == "Star Quest: The Odyssey"
+    assert response.body["title"] == film_by_id["title"]
 
     assert response.body == redis_body
 
 
 @pytest.mark.asyncio
 async def test_get_film_by_id_not_found(make_get_request):
-    response = await make_get_request(urls.films + "237fd1e4-c98e-454e-aa13-8a13fb7547b5")
+    response = await make_get_request(urls.films + "some_id_film")
 
     assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "film not found"
