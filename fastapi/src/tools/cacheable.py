@@ -1,15 +1,17 @@
 import json
 
 
-def cacheable(prefix: str = '', cache_expire: int = 300):
+def cacheable(cache_expire: int = 300):
     def inner_wrapper(func):
         async def wrapper(*args, **kwargs):
             redis = args[0].redis
+            prefix = args[0].index
             data = await func(*args, **kwargs)
+            key = args[0].key
             if not data:
                 return None
             if isinstance(data, list):
-                key = f'{prefix}: {args[0].key}' if 'key' in dir(args[0]) else prefix
+                key = f'{prefix}: {key}' if key else prefix
                 await redis.set(key, json.dumps([item.json() for item in data]),
                                 expire=cache_expire)
             else:
