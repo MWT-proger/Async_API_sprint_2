@@ -3,10 +3,10 @@ from typing import Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
-from db.redis import RedisBase, RedisService, get_redis
+from db.redis import CacheBase, CacheService, get_cache
 from elasticsearch import AsyncElasticsearch
 from models.film import MOVIES_INDEX_ELASTIC, Film
-from services.base import ListView, DetailView
+from services.base import DetailView, ListView
 
 from fastapi import Depends
 
@@ -65,7 +65,7 @@ class FilmService(ListView, DetailView):
 
 @lru_cache()
 def get_film_service(
-        redis: Redis = Depends(get_redis),
+        cache: Redis = Depends(get_cache),
         elastic: AsyncElasticsearch = Depends(get_elastic),
 ) -> FilmService:
-    return FilmService(RedisService(redis), ElasticService(elastic))
+    return FilmService(CacheService(cache), ElasticService(elastic))

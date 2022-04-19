@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 import pytest
-from functional.config import TestUrls, TestFilesPath
+from functional.config import TestFilesPath, TestUrls
 from functional.models.person import PERSON_INDEX, Person
 from functional.utils import app_logger, get_data
 

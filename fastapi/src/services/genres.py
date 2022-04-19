@@ -3,10 +3,10 @@ from typing import Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
-from db.redis import RedisBase, RedisService, get_redis
+from db.redis import CacheBase, CacheService, get_cache
 from elasticsearch import AsyncElasticsearch
 from models.genre import GENRES_INDEX_ELASTIC, GENRES_LIST_SIZE, Genre
-from services.base import ListView, DetailView
+from services.base import DetailView, ListView
 
 from fastapi import Depends
 
@@ -24,7 +24,7 @@ class GenreService(ListView, DetailView):
 
 @lru_cache()
 def get_genre_service(
-        redis: Redis = Depends(get_redis),
+        cache: Redis = Depends(get_cache),
         elastic: AsyncElasticsearch = Depends(get_elastic)
 ) -> GenreService:
-    return GenreService(RedisService(redis), ElasticService(elastic))
+    return GenreService(CacheService(cache), ElasticService(elastic))

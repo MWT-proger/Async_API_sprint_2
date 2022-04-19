@@ -1,9 +1,8 @@
 from http import HTTPStatus
 
 import pytest
-from functional.config import TestUrls, TestFilesPath
-from functional.models.film import (MOVIES_INDEX, Film, FilmDetail,
-                                    FilmList)
+from functional.config import TestFilesPath, TestUrls
+from functional.models.film import MOVIES_INDEX, Film, FilmDetail, FilmList
 from functional.utils import app_logger, get_data
 
 urls = TestUrls()

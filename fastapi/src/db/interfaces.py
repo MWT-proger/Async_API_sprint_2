@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class RedisBase(ABC):
+class CacheBase(ABC):
     @abstractmethod
     def get(self, key: str):
         pass

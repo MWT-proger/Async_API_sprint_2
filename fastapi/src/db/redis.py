@@ -3,22 +3,22 @@ from typing import Optional
 
 import backoff
 from aioredis import Redis, RedisError
-from db.interfaces import RedisBase
+from db.interfaces import CacheBase
 
-redis: Optional[Redis] = None
-
-
-async def get_redis() -> Redis:
-    return redis
+cache: Optional[Redis] = None
 
 
-class RedisService(RedisBase):
-    def __init__(self, redis: Redis):
-        self.redis = redis
+async def get_cache() -> Redis:
+    return cache
+
+
+class CacheService(CacheBase):
+    def __init__(self, cache: Redis):
+        self.cache = cache
 
     @backoff.on_exception(backoff.expo, RedisError, max_time=10, factor=2)
     async def get(self, index, key=None):
-        data = await self.redis.get(f'{index}: {key}' if key else index)
+        data = await self.cache.get(f'{index}: {key}' if key else index)
         if not data:
             return None
         if isinstance(data := json.loads(data), list):
@@ -28,4 +28,4 @@ class RedisService(RedisBase):
 
     @backoff.on_exception(backoff.expo, RedisError, max_time=10, factor=2)
     async def set(self, key: str, value: str, expire: int) -> None:
-        await self.redis.set(key=key, value=value, expire=expire)
+        await self.cache.set(key=key, value=value, expire=expire)

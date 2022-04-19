@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from db.interfaces import ElasticBase, RedisBase
+from db.interfaces import CacheBase, ElasticBase
 from tools.cacheable import cacheable
 
 
 class BaseView(ABC):
-    def __init__(self, redis: RedisBase, elasticsearch: ElasticBase):
-        self.redis = redis
+    def __init__(self, cache: CacheBase, elasticsearch: ElasticBase):
+        self.cache = cache
         self.elasticsearch = elasticsearch
         self.key = None
 
@@ -44,7 +44,7 @@ class ListView(BaseView, ABC):
                                  filter_genre=filter_genre,
                                  page_size=page_size,
                                  page_number=page_number)
-        items = await self.redis.get(self.index, key=self.key)
+        items = await self.cache.get(self.index, key=self.key)
         if not items:
             body = self._get_search_request(
                 query_search=query_search,
@@ -65,7 +65,7 @@ class ListView(BaseView, ABC):
 class DetailView(BaseView, ABC):
     @cacheable()
     async def get_by_id(self, id: str):
-        item = await self.redis.get(self.index, key=id)
+        item = await self.cache.get(self.index, key=id)
 
         if not item:
             item = await self.elasticsearch.get_by_id(self.index, key=id)
