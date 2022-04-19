@@ -3,7 +3,7 @@ from typing import Optional
 
 from aioredis import Redis
 from db.elastic import ElasticBase, ElasticService, get_elastic
-from db.redis import CacheBase, CacheService, get_cache
+from db.cache import CacheBase, CacheService, get_cache
 from elasticsearch import AsyncElasticsearch
 from models.person import PERSON_INDEX_ELASTIC, Person
 from services.base import DetailView, ListView

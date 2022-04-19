@@ -1,7 +1,7 @@
 import aioredis
 from api.v1 import films, genres, persons
 from core import config
-from db import elastic, redis
+from db import elastic, cache
 from elasticsearch import AsyncElasticsearch
 
 from fastapi import FastAPI
@@ -18,13 +18,13 @@ app = FastAPI(
 
 @app.on_event('startup')
 async def startup():
-    redis.cache = await aioredis.create_redis_pool((config.REDIS_HOST, config.REDIS_PORT), minsize=10, maxsize=20)
+    cache.cache = await aioredis.create_redis_pool((config.REDIS_HOST, config.REDIS_PORT), minsize=10, maxsize=20)
     elastic.es = AsyncElasticsearch(hosts=[f'{config.ELASTIC_HOST}:{config.ELASTIC_PORT}'])
 
 
 @app.on_event('shutdown')
 async def shutdown():
-    await redis.cache.close()
+    await cache.cache.close()
     await elastic.es.close()
 
 
