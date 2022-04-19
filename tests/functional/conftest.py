@@ -53,7 +53,7 @@ class CacheService:
 
 
 @pytest.fixture(scope="session")
-async def redis_client():
+async def cache_client():
     client = await aioredis.create_redis_pool((settings.redis_host, settings.redis_port), minsize=10, maxsize=20)
     yield CacheService(client)
     await client.flushdb()

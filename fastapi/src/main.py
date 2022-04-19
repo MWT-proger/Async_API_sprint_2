@@ -1,7 +1,7 @@
 import aioredis
 from api.v1 import films, genres, persons
 from core import config
-from db import elastic, cache
+from db import cache, elastic
 from elasticsearch import AsyncElasticsearch
 
 from fastapi import FastAPI

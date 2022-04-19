@@ -21,10 +21,10 @@ async def get_key(
 
 
 @pytest.mark.asyncio
-async def test_get_persons(make_get_request, persons_to_es, redis_client):
+async def test_get_persons(make_get_request, persons_to_es, cache_client):
     response = await make_get_request(urls.search_persons)
     key = await get_key()
-    redis_body = await redis_client.get(PERSON_INDEX, key=key, model=Person)
+    redis_body = await cache_client.get(PERSON_INDEX, key=key, model=Person)
 
     assert response.status == HTTPStatus.OK
     assert [Person(**item) for item in response.body]
@@ -32,10 +32,10 @@ async def test_get_persons(make_get_request, persons_to_es, redis_client):
 
 
 @pytest.mark.asyncio
-async def test_get_persons_page_size(make_get_request, redis_client):
+async def test_get_persons_page_size(make_get_request, cache_client):
     response = await make_get_request(urls.search_persons, {"page[size]": 2, "page[number]": 3})
     key = await get_key(page_size=2, page_number=3)
-    redis_body = await redis_client.get(PERSON_INDEX, key=key, model=Person)
+    redis_body = await cache_client.get(PERSON_INDEX, key=key, model=Person)
 
     assert response.status == HTTPStatus.OK
     assert [Person(**item) for item in response.body]
@@ -43,13 +43,13 @@ async def test_get_persons_page_size(make_get_request, redis_client):
 
 
 @pytest.mark.asyncio
-async def test_get_person_ok(make_get_request, redis_client, person_by_id_to_es):
+async def test_get_person_ok(make_get_request, cache_client, person_by_id_to_es):
     data_from_file = await get_data.from_file(test_data.person_by_id)
     person__by_id = data_from_file[0]
 
     response = await make_get_request(urls.persons + person__by_id["id"])
     key = person__by_id["id"]
-    redis_body = await redis_client.get(PERSON_INDEX, key=key, model=Person)
+    redis_body = await cache_client.get(PERSON_INDEX, key=key, model=Person)
 
     assert response.status == HTTPStatus.OK
     assert Person(**response.body)
@@ -66,14 +66,14 @@ async def test_get_person_not_found(make_get_request):
 
 
 @pytest.mark.asyncio
-async def test_search_persons_ok(make_get_request, redis_client, person_search_to_es):
+async def test_search_persons_ok(make_get_request, cache_client, person_search_to_es):
     data_from_file = await get_data.from_file(test_data.person_search)
     person_search = data_from_file[0]
 
     response = await make_get_request(urls.search_persons, {"query": person_search["full_name"]})
 
     key = await get_key(query_search=person_search["full_name"])
-    redis_body = await redis_client.get(PERSON_INDEX, key=key, model=Person)
+    redis_body = await cache_client.get(PERSON_INDEX, key=key, model=Person)
 
     assert response.status == HTTPStatus.OK
     assert [Person(**item) for item in response.body]
